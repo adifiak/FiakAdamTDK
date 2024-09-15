@@ -1,6 +1,100 @@
 \chapter{Saját kontribúció}
+Ebben a fejezetben kerülnek bemutatásra a téma kapcsán létrejött saját eredmények. Először a megoldás lehetséges módjai kerülnek bemutatásra az előnyeikkel és hátrányaikkal együtt.
+A második alfejezet a rendszerek SysML v2-ben történő modellezéséhez létrehozott módszertanokat mutatja be,amelybe beleépülnek a szimulációs technológiákhoz létrehozott módszerek.
+Végül egy konkrét esettanulmányon keresztül bemutatásra kerülnek a leírt módszerek.
 
 \section{Lehetséges megközelítések}
+    A modellalapú rendszertervezési és a szimulációs technológiák integrálása módosításokat követel mind a két oldal modelljeiben.
+    Ezek a módosítások és tervezési módszerek a két terület közötti kapcsolat, egy kölcsönös megfeleltetés miatt elengedhetetlenek.
+    Azonban több különböző lehetőségünk van, ennek a megvalósítására.
+    Ez a fejezet ezeket a megközelítéseket veszi sorra és hasonlítja őket össze.
+
+    \subsection{Szimulációs fogalmak bevezetése a rendszermodellbe}
+        A rendszermodell tekintetében a leglátványosabbak ezek a változások, mivel itt ténylegesen meg kell jelenni a másik szakterületnek, hogy az beolvadhasson a fejlesztési folyamatba.
+        A szimulációs fogalmak bevezetésére két módszert dolgoztunk ki, amelyeket részletesen tárgyalunk majd.
+
+        \subsubsection{Annotáció alapú leképezés}
+        Az új fogalmak és tulajdonságok bevezetésére a legkézenfekvőbb megoldás a SysML v2 nyújtotta lehetőség különböző metaadatok bevezetésére.
+        A megoldás lényege, hogy létrehozunk egy importálható fájlt amely minden fontos fogalomhoz tartalmaz egy-egy annotációt, amivel az adott eleme bevezethető.
+        Ezen kívül lehetőség van szabályokat megadni, amelyek segítenek megakadályozni a hibás használatot, például nem jelölhetjük külön szimulációs egységnek (Például FMU-k.) a követelményeket vagy a köztük lévő logikai kapcsolatot.
+        Ezzel a megoldással, a fogalmak bevezetése abból áll, hogy minden elemet ellátunk a megfelelő annotációval és ezek alapján a leképezést létrehozó vagy felhasználó programok ezek segítségével tudják értelmezni, bejárni a rendszermodellt szimulációs szemszögből nézve.
+
+        \subsubsection{Szimulációs modellvetület bevezetése}
+        A másik lehetőség, ha bevezetünk egy konkrét területet a modellben -egyfajta nézetet- amely leírja a szimulációs modellt.
+        A rendszermodellezésben alapvetően jelen van ez a szemlélet, a rendszerek tervezésénél egy logikai és egy fizikai modellel dolgoznak a rendszermérnökök.
+        Ennél a megközelítésnél egy ezekhez hasonló, harmadik vetületet hozunk be a rendszermodellbe és a rendszermodell elemeit explicite összekötjük az azokat reprezentáló szimulációs elemek modelljével.
+        Ezzel a megoldással a szimulációkhoz kapcsolódó fogalmak, csak a vonatkozó nézetben jelennek meg.
+        Magának a nézetnek a megvalósításához célszerű készíteni egy nyelvi kiterjesztést.
+        Ez a SysML v2 adta lehetőség arra, hogy szakterület specifikus típusokat hozhassunk létre.
+        Ennek az eszköznek a használata célszerűbb ennél a megközelítésnél, mert itt egy konkrét szakterület szerinti modellt alkotunk.
+        Nincs szükség az annotációk flexibilitására, cserébe a használata egyszerűbb, jobban kikényszeríthető a megfelelő struktúra alkalmazása, mint ha csak különböző annotációkat adnánk az egyes elemekhez.
+
+        \subsubsection{Lehetőségek összehasonlítása}
+        Az annotáció alapú megközelítés előnye könnyen látható. Az, hogy a meglévő modell elemeit felcímkézzük, lehetővé téve a leképezést, azt jelenti, hogy minimális többletmunkára van szükség az eddigiekhez képest.
+        A kevesebb nézet szerinti modellezés kevesebb munkát igényel, így a fejlesztés gyorsabban haladhat.
+        
+        A módszernek azonban van három komoly hátránya is, amelyek a második módszer mellett könnyen megoldhatóak.
+
+        Ha a teljes modellben jelen vannak az új szakterület fogalmai, az azt jelenti, hogy mindenkinek tisztában kell lenni azokkal, hogy dolgozni tudjon.
+        Ez azt jelenti, hogy minden rendszermérnököt külön szimulációs technológiákra vonatkozó képzésben kell részesíteni.
+        Ráadásul az extra képzésben részesített szakemberek nyilvánvalóan nem tudják olyan hatékonyan végezni ezt a munkát, mint azok, akik külön erre a területre specializálódtak.
+
+        Az annotációs módszer második hátránya, hogy bármilyen modellstruktúrát megenged, nem kényszeríti ki egy jól kidolgozott módszertan követését.
+        Egy általános modellstruktúra leképezéséhez a feladatot ellátó szoftvereknek is jóval komplexebbnek kell lenniük, mintha egy előre ismert struktúra mentén dolgoznának.
+
+        A harmadik probléma, hogy az elemeken elhelyezett annotációk egyféle képpen címkézik fel a modellt, azaz egyetlen szimulációs modellt írnak le.
+        A szimulációk során azonban rendszerint számos különböző modellt használnak, az aktuális igényeknek megfelelően, ezek között szükséges hogy lehessen váltani, a komponensek különböző modelljeiből több összeállítást készíteni.
+        Ehhez vegyünk például egy robotot és annak tápegységét.
+        Amikor a tápegységet fejlesztjük, fontos, hogy a benne zajló jelenségeket minél pontosabban modellezzük. például egy kapcsoló üzemű tápegységnél a benne használt tranzisztorok pontos viselkedése elengedhetetlen a hatékonyság és a kimenő vezetékeken megjelenő zaj optimalizálásához, a követelmények teljesülésének vizsgálatához.
+        Azonban amikor a robotunk vezérlését teszteljük, akkor rendszerint érdektelen számunkra, hogy tökéletesen pontosan ismerjük a fenti paramétereket, az a fontos, hogy az adott mozgások okozta terhelést képes-e kielégíteni a rendszer, illetve körülbelül mekkora a fogyasztása.
+        Ezt a problémát úgy oldják meg, hogy több, különböző részletességű modellt készítenek, az egyes feladatokhoz.
+        Persze használható minden feladatra a legrészletesebb modell, azonban az extra részletek sokszor nem jelentenek lényeges különbséget, míg a szimuláció számításigényét jelentősen megemelhetik.
+
+        A szimulációs modellhez tartozó nézet bevezetése megoldja a fenti problémákat.
+
+        Azzal, hogy egy konkrét modellrészletre korlátozzuk a speciális tudást igénylő munkafolyamatokat, lehetőség nyílik egyetlen, specializált szakemberekből álló csoportra bízni ezt a feladatot.
+        A többi mérnöknek nem kell további képzés, a specializált szakemberek pedig jobb minőségű munkát végezhetnek a terület behatóbb ismeretének köszönhetően.
+
+        Az előre ismert struktúra és a domain-specifikus modellezési eszközök bevezetése megkönnyíti a modelleket és az eszköztámogatást készítők munkáját is.
+
+        Azzal, hogy a különböző szimulációs funkciókat nem kötjük hozzá direkt módon a rendszermodell elemeihez, lehetőség nyílik, hogy a szimulációs nézetben több szimulációs modellt is kapcsoljunk egy rendszerkomponenshez.
+        Ez lehetővé teszi az eltérő részletességű modellek bevezetését, valamint a HiL és SiL technológiákhoz kapcsolódó szimulációs modellek is könnyen kezelhetőek egy extra verzióként.
+
+        A fentiek alapján látható, hogy az új nézet bevezetése jobban illeszkedik a technológiák alkalmazásához, jobb minőségű modelleket tesz lehetővé és a speciális szaktudás igényének csökkentésével az ilyen módszerek egyszerűbben és olcsóbban vezethetőek be a gyakorlatban.
+        Ezek alapján a további munka során erre a megközelítésre összpontosítunk.
+
+    \subsection{Szimulációs modell architektúrák}
+        A szimulációs modellek esetében a változások azért szükségesek, hogy a rendszermodell megfelelően leképezhesse a szimulációs modelleket.
+        Itt inkább tervezési konvenciókról, megkötésekről van szó, mivel egy teljesen szabadon készült modell leképezése jóval bonyolultabb feladat, mintha valamilyen előre ismert sémát használunk.
+
+        \subsubsection{Leképezés a Modelica teljes eszközkészletével}
+            A Modelica nyelvet kifejezetten fizikai rendszerek leírására és szimulációjára fejlesztették ki.
+            Ennek köszönhető gazdag eszközkészlete, a különböző jelenségek leírására.
+            Az első megközelítés, hogy ezeknek az eszközöknek mindegyikét szabadon használjuk a rendszer leírásához, mivel a minél pontosabb modellek érdekében hozták létre ezeket a nyelvi elemeket.
+            Ilyen eszköz a külső változók használata, amelyek a környezeti hatások, mint például a gravitáció megadását teszik lehetővé. Ez azért fontos mert például egy bolygó modelljében, csak azt tüntetjük fel, hogy van ilyen érték és ez hogyan befolyásolja ezt a modellelemet, azonban a számítását a környezetre bízza, így könnyebben újrahasználható és logikusabban strukturált modelleket kapunk.
+            A másik fontos lehetőség az úgynevezett akauzális csatlakozók használata. Ezek irányítatlan kapcsolatokat jelölnek, ami azt jelölő, hogy a kapcsolat két vége valamilyen szempontból egyenlő egymással. Jó példa erre az áramköri elemek beépített modellkönyvtára. A kapcsolat itt a kapcsolási rajzok vezetékeivel analóg módon viselkedik, az áram mindkét irányba folyhat az adott kapcsolaton és mindkét oldalán található komponensek befolyásolják ennek mértékét.
+            Ez szintén olyan jelenség, amely a világban igen gyakran megfigyelhető -gyakorlatilag minden fizikai mennyiségnél-, és rengeteg segítséget nyújt, amikor ilyen viselkedést kell modellezni.
+            Könnyen belátható, hogy ezeknek a lehetőségeknek a korlátlan kihasználása mennyivel egyszerűbbé teszi a szimulációs modellek megalkotóinak munkáját.
+
+        \subsubsection{FMU kompatibilis leképezés}
+            Az FMI szabványt azért hozták létre, hogy az egyes modelleket könnyen át lehessen vinni egyik eszközből a másikba, illetve megoszthatóak, újrahasználhatóak legyenek az önálló logikai egységek.
+            Ez egy olyan képesség, amit célszerű kihasználni az összetett rendszerek tervezése során, ez azonban megszorításokat kényszerít a modellekre.
+            Az eszközfüggetlenség ugyanis azt jelenti, hogy a szabvány csak a létező legalapvetőbb adatkapcsolatokat teheti lehetővé, amelyek minden eszközben elérhetőek lesznek.
+            Ez a gyakorlatban azt jelenti, hogy kizárólag egész és racionális számok valamint logikai értékek szerepelhetnek a csomag ki és beviteli csatlakozóin és ezek a kapcsolatok kizárólag egyirányúak lehetnek.
+            Az ilyen megkötések mellett modellezett komponensek alakíthatóak át FMU-vá, hogy hordozhatóvá tegyék őket.
+            Az FMI szempontjából csak a komponens és a környezetének kapcsolata számít, tehát csak azoknak a jeleknek kell megfelelni ezeknek a kritériumoknak, amelyek áthaladnak a komponens határain.
+
+        \subsubsection{Lehetőségek összehasonlítása}
+            A fentiek alapján látható, hogy ebben a kérdésben nincsen olyan határozott válasz, mint a rendszermodellek esetében.
+            Ahhoz, hogy a modellek minél jobban legyenek rendezve és minél egyszerűbben tegyék lehetővé a rendszerek leírását, használnunk kell az erre szolgáló eszköztárat.
+            Ezek az eszközök azonban kizárják a modellek hordozhatóságát, amely elengedhetetlen komplex -több szakterületet érintő- rendszerek esetében, vagy több független szereplő együttműködése esetén.
+            Az első lépés ennek a problémának a feloldására, hogy jól definiáljuk, mely komponenseket szeretnénk FMU-vá alakítani, mivel a modellezési eszközök csak ezek határain kerülnek megszorításra.
+            Ha továbbra is gondot jelentenek a megkötések, akkor célszerű két részre bontani az adott komponenst -ha ez lehetséges-.
+            Az első rész adja az FMU-t, amely tartalmaz minden olyan logikát, amelyet nem szeretnénk megosztani, és elfogadható nehézséggel kommunikál a komponens modelljének maradék részével a megszorítások mellett is.
+            A második rész a minimális modellt tartalmazza, amely a megszorított kommunikációs módokat átalakítja egy eszköz specifikus, de könnyen használható interfésszé.
+            Fontos, hogy ezek az adapterelemek minél egyszerűbbek legyenek, mivel ezeket minden támogatni kívánt eszközben külön el kell készíteni, valamint ezekre nem terjed ki a források védelme, mivel nem alakíthatóak FMU-vá.
+            Hasonló technikával próbálták már feloldani az akauzális kapcsolatok hiányát //TODO hivatkozás a Japán kutatókra, de a módszer még nem elég kiforrott és az alkalmazása csak automatizáció után lehet valós alternatíva a gyakorlati alkalmazásokban.
+            Ezen felül, felmerült már az FMI szabvány kiterjesztése is az akauzális kapcsolatok támogatására, azonban ez még csak elméleti lehetőségként létezik, így szabványos megoldás egyenlőre nem várható.
 
 \section{Modellezési módszertan}
 
