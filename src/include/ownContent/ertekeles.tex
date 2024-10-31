@@ -1,1 +1,50 @@
 \chapter{Eredmények értékelése}
+A kidolgozott módszertannak általános, illetve esettanulmány alapján történő értékelése jelen fejezetben találhatóak.
+
+    \section{Motivációk szempontjából}
+    Először érdemes megvizsgálni, hogy a dolgozat motivációjául szolgáló szempontok szerint mennyire eredményes az eddigi munka.
+
+        \subsection{Rendszertervezési szempontok}
+        A modellalapú technikák általános előnyei közzé tartozik a nyomon követhetőség, a modellek konzisztenciája és a nézetek valamint dokumentumok automatikus generálhatósága.
+        Mivel a dolgozatban javasolt módszertan is ilyen, modellalapú megközelítést alkalmaz, ezért ezeket nyelvi szinten teljesíti, illetve kompatibilis az eszközökkel amik képeset teljesíteni a konzisztencia esetében.
+        A következő szempontok azok, amelyekre csupán lehetőséget biztosít a technológia, de ezek megvalósítása már a módszertannak köszönhető.
+
+            \subsubsection{Validáció és Verifikáció (V\&V) minden fejlesztési fázisban} \label{ertekelesVV}
+            A módszertan bemutatása során látható volt, hogy a fejlesztés folyamán több alkalommal is szerepelnek validációs lépések, melyeknek célja a hibák mielőbbi kiszűrése.
+            Ez komoly előrelépés a hagyományos módszerekhez és több modellalapú módszertanhoz képest, amelyek nem, vagy csak a fejlesztés végén tartalmaznak ilyen elemeket. \cite{autoEEsystemEngineer2024}
+            Jelen dolgozat a szimulációs technológiákkal kapcsolatos validációra koncentrált, de természetesen ezekkel együtt végrehajthatóak más V\&V lépések is ugyanazokon a pontokon.
+
+            \subsubsection{Modellek újrahasználhatósága}
+            A kidolgozott módszertan javaslatot tett olyan könyvtárak használatára amelyek újrahasználhatóvá teszik az általános modellrészleteket.
+            Ez a szempont jellemzően nem jelent meg az eddigi módszertanokban, bár természetesen nem is zárták ki ezek használatát. \cite{Capella2024} \cite{autoEEsystemEngineer2024} \cite{Weilkiens2020}
+            A javasolt megközelítés esetén kiemelendő, hogy a szimulációs technológiákkal integrált könyvtárakat javasol. Ezeknek a könyvtárba rendezése összhangban áll az aktuális általános szimulációs törekvésekkel és még inkább elősegíti a két terület integrálását.
+
+        \subsection{Szimulációs szempontok}
+        A mivel a módszertan lehetőséget nyújt a szimulációs technológiák alkalmazására, így magában foglalja azok előnyeit is.
+        Meg kell említeni azonban, hogy bár a dolgozat kitért a HiL illetve SiL szimulációkkal való kompatibilitásra és elvi szinten támogatja azokat, ennek pontos megvalósításával nem volt lehetőség foglalkozni az eddigi munka során.
+
+        \subsection{A két technológia integrálása szerint}
+        A kidolgozott módszertan számos előnnyel rendelkezik a két érintett terület kapcsán, azonban célja a kettő ötvözése, az alábbiakban egyesével értékelem az ennek kapcsán felmerült előrelépéseket és hiányosságokat.
+
+            \subsubsection{Automatikus kódgenerálás}
+            Mivel a két terület integrálásához szükséges a rendszermodellben egy külön reprezentációt készíteni a szimulációs modellekhez, ezért felmerül az igény, hogy ezek alapján automatikusan állítsuk elő őket.
+            A módszertan kidolgozása során részletesen vizsgáltam ezt a lehetőséget és kidolgozásra kerültek ennek alapvető sémái. Ezek az eredmények azért nem szerepeltek o dolgozatban, mert először későbbi fejlesztésre lettek félretéve, később pedig rábukkantam a \ref{sec:SysPhS} részben bemutatott SysPhS
+            eszközre, amely az elérhető leírások alapján illeszkedik a kidolgozott alapelvekhez, így a saját megoldás helyett a két technológia ötvözése lett a cél.
+            Az esettanulmány alatt, amikor a szimulációs modellreprezentációkat és a szimulációs modelleket is kézzel kellett elkészítenem, az eddigiek mellett felmerült, hogy magukat a modellreprezentációkat is lehetne részben automatikusan generálni, ezzel még jobban kiterjesztve ezeket az előnyöket.
+
+            \subsubsection{Munkafolyamatok konzisztenciájának garantálása}
+            Az integrált technikák esetében ez a cél különböző modelltípusok konzisztenciáját jelenti. A módszertan javaslatot tett olyan modellstruktúrákra, amelyek megkönnyítik ennek ellenőrzését, illetve lehetőséget biztosít a kódgenerálásra, amely biztosítja ennek a konzisztenciának a felhasználóbarát megvalósítását is.
+            Ami a szimulációk eredményeit illeti, ezeknek a garantált konzisztenciájához szükséges, hogy a szimuláció eredménye automatikusan visszakerüljön a rendszermodellbe.
+            A leképezés ezen irányára nem tért ki a módszertan, bár az esettanulmány tapasztalatai alapján ez módszertantól független eszközökkel biztosítható, ha a tervezési folyamatban van hely ilyen vizsgálatoknak.
+            A \ref{sec:flow} rész végén találhatóak javaslatok ilyen lépések elhelyezésére, így egy ilyen eszköz elméletileg gond nélkül használható a kidolgozott módszerekkel.
+
+            \subsubsection{Integrált V\&V}
+            A két előző pont teljesülése esetén megvalósuló integrált V\&V folyamatok a fentiekben leírtak alapján elő lettek készítve, azonban tényleges megvalósításuk még várat magára, főleg mivel ehhez már szükség van az említett kétirányú kapcsolatra.
+            
+            \subsubsection{Rendszer-identifikáció támogatása paraméter-visszavetítéssel.}
+            Ez a technológia ugyanarra a kétirányú kapcsolatra támaszkodik mint ami az előző két pontban is szerepelt, így ennek megvalósítása szintén külső eszközök fejlesztését igényli, de a tapasztalatok alapján, ha elkészülnek ilyen keretrendszerek, akkor azok használhatóak lesznek a leírt módszerekkel.
+
+    \subsection{A felhasználási tapasztalatok szerint}
+    Az esettanulmány során készített modellek fejlesztésénél a leírt módszerek hatékonynak és kényelmesnek bizonyultak.
+    A szimulációs modelltranszformáció alapvetően repetitív és monoton feladatnak bizonyult, azonban ennek az elvégzése hosszútávon automatizálandó feladatként szerepelt a kezdetektől fogva.
+    A tapasztalatok alapján ez a feladat valóban sematikus és jól automatizálható. A szükséges adatok könnyen kinyerhetőek a javasolt allokáció-centrikus modellekből, nemcsak a tervezők, de az automatizált eszközök számára is.

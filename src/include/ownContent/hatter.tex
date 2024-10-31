@@ -16,10 +16,10 @@ Ezután a területek aktuális problémáinak részletes bemutatása következik
         Más műszaki területekhez hasonlóan, a rendszerek komplexitásának növekedésével a rendszertervezésben is nehézkessé vált a klasszikus módszerekkel történő munka, mivel a rengeteg, gyorsan változó dokumentum mellett nehézzé vált a követelmények teljesítésének nyomon-követhetősége, valamint az egymással kapcsolatban álló komponensek kompatibilitásának garantálása.
         Egy nagy komplexitású rendszernél, mint például egy hordozórakéta látható, hogy milyen sok fejlesztőcsapat dolgozik párhuzamosan különböző komponenseken. A dokumentum alapú megközelítésnél minden változást után frissíteni kellett a saját dokumentációt és eljuttatni azt minden más csoportnak, akinek ez befolyásolta a munkáját, hogy ők is módosíthassanak a komponensükön, az új információk alapján.
         Egy repülőgép esetében, ahol ilyen rengeteg csapat dolgozik együtt, belátható, hogy a rengeteg beérkező dokumentum mellett, milyen nehéz is lehet egy egy csoportnak, hogy a terveit naprakészen tartsa, mivel elég egyetlen dokumentumot elkeverni, és az esetleges inkonzisztencia katasztrofális következményekhez vezethet.
-        A //TODO: PÉLDA KIKERESÉSE hordozórakéta fejlesztése során például a vezérlőszoftver fejlesztőinek figyelmét elkerülte az a részlet, hogy a rakéta megnövekedett tömege miatt új hajtóműveket terveztek, amelyeknek a megnövekedett tolóereje már nem volt ábrázolható a nyolc bites változókban, amelyek tökéletesen megfeleltek minden hajtőműhöz, amellyel a meglévő vezérlőrendszert korábban használták.
-        Az eredmény az volt, hogy a szoftver csak a mért adatok egyik felét használta fel, így a helyes mérési adatokat hibásan vette át -Az egyébként jól működő vezérlőrendszer- és a rakéta a kilövés után lezuhant.
+        Az Ariane 5 hordozórakéta fejlesztése során például a vezérlőszoftver fejlesztőinek figyelmét elkerülte az a részlet, hogy a rakéta megnövekedett tömege miatt új hajtóműveket terveztek, amelyeknek a megnövekedett tolóereje már nem volt ábrázolható a nyolc bites változókban, amelyek tökéletesen megfeleltek minden hajtőműhöz, amellyel a meglévő vezérlőrendszert korábban használták.
+        Az eredmény az volt, hogy a szoftver csak a mért adatok egyik felét használta fel, így a helyes mérési adatokat hibásan vette át -Az egyébként jól működő vezérlőrendszer- és a rakéta a kilövés után lezuhant. \cite{Arinane5_1996}
         A baleset megelőzhető lett volna, ha a vezérlőrendszerben tizenhat bites változókra váltanak, amikor a hajtóművek vezérlésében is megtették ugyan ezt, de sajnos ez az apró részlet elveszett a számtalan dokumentum között.
-        Szintén szemléletes példa amikor a //TODO: PÉLDA KIKERESÉSE mars-szonda tért le a tervezett pályájáról, mivel két fejlesztőcsapat nem ugyan abban a mértékegységben tárolta ugyan azt az adatot, így amikor az átadásra került a szoftverkomponensek között, félreértelmezésre kerültek. Ez az incidens is elkerülhető lett volna, ha bárki észreveszi a mértékegységek eltérését, de sajnos mindkét félnek természetes volt a saját választása és elsiklottan az eltérés felett.
+        Szintén szemléletes példa amikor a Mars Climate Orbiter mars-szonda tért le a tervezett pályájáról, mivel két fejlesztőcsapat nem ugyan abban a mértékegységben tárolta ugyan azt az adatot, így amikor az átadásra került a szoftverkomponensek között, félreértelmezésre kerültek. Ez az incidens is elkerülhető lett volna, ha bárki észreveszi a mértékegységek eltérését, de sajnos mindkét félnek természetes volt a saját választása és elsiklottan az eltérés felett. \cite{MCO2009}
 
         A probléma megoldására fejlesztették ki a modell alapú rendszertervezést, ahol a dokumentumok helyett egy matematikai alapokon nyugvó modellezési nyelvben írják le a rendszereket. A módszer előnye, hogy mivel a modell alapja egy matematikai formalizmus, így magán a rendszerterven is végezhetőek különböző műveletek, automatikusan ellenőrizhetőek bizonyos feltételek, valamint használhatóak a más területen már bevett verziókezelő-rendszerek a konzisztens állapotok fenntartására.
         A továbbiakban az új lehetőségek legfontosabb előnyi kerülnek részletesebben bemutatásra.
@@ -35,7 +35,7 @@ Ezután a területek aktuális problémáinak részletes bemutatása következik
         Ezen túl lehetséges garanciákat és feltételezéseket felvenni az adott komponensekhez. Például a korábbi példában, ahol a változók mérete eltért a két komponensben, megtehető lett volna az adatformátumhoz felvenni a nyolc bites formátumot garanciaként, és ennek a teljesülését feltételezésként a másik komponensben.
         Így amikor az új hajtómű implementációjában tizenhat bitesre változtatták a formátumot, akkor a garancia megszűnt volna, ami automatikusan hibát jelzett volna a másik komponens modelljében, mivel ott feltételezve volt a korábbi formátum.
 
-        \subsubsection{Validáció és Verifikáció (V\&V) minden fejlesztési fázisban}
+        \subsubsection{Validáció és Verifikáció (V\&V) minden fejlesztési fázisban} \label{sec:VaVmindenutt}
         Az úgynevezett kritikus rendszereknél, ahol fontos, hogy az elkészült rendszer bizonyíthatóan mentes legyen az implementációs hibáktól, elengedhetetlen a validációs és verifikációs lépések végzése. A validáció azt mutatja meg, hogy a rendszer teljesít valamilyen követelményt, tehát képes-e betölteni a feladatát, míg a verifikáció feladata bizonyítani, hogy ezt úgy teszi, hogy bizonyos feltételeket minden esetben teljesít. Például, a validáció feladata, hogy egy repülőgép robotpilótája valóban képes elvezetni a gépez a megadott útvonalon, míg a verifikáció feladata bizonyítani, hogy a feladatot végző program minden -valóban megadható- útvonalon megfelelően működik, például nem okoz meghibásodást ha átrepül az egyenlítő felett, ahol váltania kell északi és déli szélességi körök között; nem kerül végtelen ciklusba; nem szivárogtatja a memóriát; nincs olyan állapot amibe beragadhat, például a pilóta bármikor vissza tudja venni az irányítást a robotpilótától, ha szükségesnek ítéli.
         A klasszikus rendszertervezésben ezek a lépések csak a fejlesztés későbbi szakaszaiban kezdődhetnek meg, amikor már elkészültek prototípusok az egyes komponensekből.
         Ezzel szemben, mivel a modell alapú megközelítésnél már a komponensek megvalósítása előtt rendelkezésre állnak különböző részletességű modellek ezekről, amelyeken végezhetőek műveletek, hiába nem fejeződött be -vagy egyáltalán kezdődött el- az implementációjuk.
@@ -56,7 +56,7 @@ Ezután a területek aktuális problémáinak részletes bemutatása következik
         Ezek eredetileg különálló dokumentumként léteztek, amit ugyan úgy frissíteni kellett a változások szerint, viszont mivel ezek nem feltétlenül egy komponensre, hanem egy nagyobb tervezési szempontra koncentrálnak, így minden érintett alkatrész módosulása új verziót igényelt.
         A modell alapú rendszertervezésben a rendszer-modell tartalmaz minden információt egy helyen, ami a fejlesztés szempontjából lényeges.
         Természetesen a specifikus nézetek továbbra is szükségesek, de lehetőséget kapunk egy jóval egyszerűbb alternatívára, a külön dokumentumok karbantartása helyett.
-        Ez pedig az, hogy a modellből generáljuk ezeket az összefoglalókat, ha szükség van rájuk. Ennek előnye, hogy nem igényel többletmunkát a mérnökök részéről, és bármely pillanatban azonnal rendelkezésre áll a naprakész verzió, nem kell várni, utánakeresni és mindig a tényleges állapotról adnak képet, nem pedig a készítés előtt kiválasztott esetleg inkonzisztens verziók összegzése.//TODO:Lábjegyzet a verziókezelés által garantált konzisztenciáról.
+        Ez pedig az, hogy a modellből generáljuk ezeket az összefoglalókat, ha szükség van rájuk. Ennek előnye, hogy nem igényel többletmunkát a mérnökök részéről, és bármely pillanatban azonnal rendelkezésre áll a naprakész verzió, nem kell várni, utánakeresni és mindig a tényleges állapotról adnak képet, nem pedig a készítés előtt kiválasztott esetleg inkonzisztens verziók összegzése. A konzisztens állapot biztosítására már számos megoldás létezik a különböző forrástípusok esetén. \cite{Git2024}\cite{LieberLieber2024}
 
     \subsection{Szimulációs technológiák előnyei}
     A szimulációs technológiák már évtizedek óta megjelentek a műszaki tudományok terén, szinte a fejlesztési folyamatok bármely pontjára találhatóak példák az alkalmazásukra.
@@ -74,7 +74,7 @@ Ezután a területek aktuális problémáinak részletes bemutatása következik
         A másik lehetőség egy mesterséges tesztkörnyezet, mint egy szélcsatorna, de ott is felmerül a kérdés, hogy tudjuk-e pontosan replikálni az összes tényezőt, illetve, hogy azok minden valós körülménynek megfelelnek-e. Például lehet-e a repüléshez hasonlóan változtatni a légnyomást, hőmérsékletet és páratartalmat, vagy tényleg csak a szél paraméterei lesznek összehasonlíthatóak a mérésekben.
         A probléma megoldása lehet, ha szimulációval egy virtuális környezetet és hajtóművet használunk. Mivel ennek a környezetnek minden paraméterét meghatározhatjuk, így garantálható, hogy pontosan olyan hatások érik a két rendszert a tesztek során, valamint az is, hogy a mérések később megismételhetőek lesznek.
 
-        \subsubsection{Gazdaságos tesztelés}
+        \subsubsection{Gazdaságos tesztelés} \label{sec:gazdasagossag}
         A fejlesztési folyamatoknak szerves részét képzi a kidolgozott megoldások tesztelése, annak megállapítására, hogy azok valóban megfelelően működnek.
         Azonban a hagyományos tesztek csak a prototípus elkészülése után kezdhetőek meg, ami költséges és időigényes folyamat. Ennek az elősegítésére hozták létre a Rapid Control Prototyping azaz a gyors prototípus készítés módszerét a szabályozástechnika területén.
         A módszer lényege, hogy a tényleges vezérlő legyártása nélkül, szimulált környezetben figyelik az algoritmus működését, így egy megközelítés kipróbálásához, nem szükséges fizikai alkatrészeket legyártani, továbbá nagyobb biztonsággal lehet kísérletezni, mert egy hibás megoldás nem okoz valódi kárt.
@@ -110,7 +110,7 @@ Ezután a területek aktuális problémáinak részletes bemutatása következik
         Olyan kritikus esetekben mint a fenti példa, ezeket a teszteket nem csak egy mérnöki példányon, hanem minden elkészült darabon végrehajtják, hogy garantálják az elkészült alkatrész megfelelő működését.
         Ennek már nem a tervek, hanem a konkrét példány működésének a célja.
 
-    \subsection{Integrált rendszertervezési és szimulációs technológiák előnyei}
+    \subsection{Integrált rendszertervezési és szimulációs technológiák előnyei} \label{IntegracioElonyei}
     Látható, hogy a két technológia alkalmazása külön-külön is számos előnyt biztosít a mérnökcsapatoknak, de a kettő integrációja további előnyökkel járhat.
     A következőkben ezek az extra előnyök kerülnek bemutatásra.
 
@@ -182,14 +182,14 @@ először célszerű röviden áttekinteni ezeket.
         rendelkezik a műszaki tudományok különböző ágainak támogatására.
 
         A munkám során használt OpenModelica eszköz, amely a nyelv nyílt implementációjához tartozó
-        környezet, alapból támogatja az FMI és SSP szabványok használatát, amely komoly segítséget jelent a technológiák
+        környezet, alapból támogatja az FMI és SSP szabványok (Lásd: \ref{sec:ModellHord}) használatát, amely komoly segítséget jelent a technológiák
         integrálása során.
 
-    \subsection{Modellek hordozása és szimulálása}
+    \subsection{Modellek hordozása és szimulálása} \label{sec:ModellHord}
     A fent említett nyelvek természetesen nem az egyedüliek a területen, valamint számos domain-specifikus megoldás létezi a rendszerek leírására és modellezésére mind nyelvi, mind fejlesztőkörnyezeti szempontból.
     Ezért is van szükség olyan megoldásokra, amely a felhasznált technológiáktól függetlenül képesek reprezentálni a modelleket, hogy azok más eszközök számára is értelmezhetőek legyenek. A következőkben bemutatásra kerülnek erre a célra használt technológiák.
     
-        \subsubsection{Functional Mock-up Interface (FMI)}
+        \subsubsection{Functional Mock-up Interface (FMI)} \label{sec:fmi}
         A Functional Mock-up interface (a továbbiakban: FMI) szabvány egy egységes interface-szel
         rendelkező csomagformátumot definiál, amellyel egyes komponensek modelljeit lehet becsomagolni,
         hogy aztán egy közös szimulátorban összekapcsolhassák őket és ott a komponensekből felépítettet
@@ -203,7 +203,7 @@ először célszerű röviden áttekinteni ezeket.
         lett megalkotva, hogy a lehető legtöbb területen alkalmazható legyen, így például beágyazott
         rendszerekben elérhető erőforrásokkal is használhatóak ezek a csomagok.
 
-        \subsubsection{System Structure and Parameterization (SSP)}
+        \subsubsection{System Structure and Parameterization (SSP)} \label{sec:ssp}
         Ez a szabvány bár kapcsolódik az FMI-hez, de szerkezetéből adódóan bármilyen hasonló
         komponensmodell csomagokhoz alkalmazható, ennek ellenére mi a továbbiakban az FMI csomagok (a
         továbbiakban FMU), viszonylatában vizsgáljuk. A probléma, amit megoldani hivatott, hogy bár az
@@ -214,12 +214,19 @@ először célszerű röviden áttekinteni ezeket.
         FMI-vel együtt kezelik, ezért hasonló a támogatottsága, illetve az őt használó eszközök felé nyújtott
         támogatásának képességei is. Illetve megemlítendő, hogy ez esetben is is nyílt szabványról van szó.
 
+    \subsection{Szimulációs modell generálása rendszermodell alapján}
+    Mivel a rendszermodellezés és a szimulációs technológiák összehangolása már évek óta aktív terület, így megjelentek eszközök amelyek a rendszermodellből való szimulációs modell generálást hivatottak támogatni. A következőekben ezek az eszközök kerülnek röviden bemutatásra.
+
+        \subsubsection{SysPhS} \label{sec:SysPhS}
+        A SysPhS-t a National Institute of Standards and Technology (NIST), azaz az amerikai Nemzeti Szabványügyi és Technológiai Intézet fejleszti. Az eszköz jelenleg az általa definiált speciális típusokkal leírt SysML modellekből képes Modelica illetve Matlab Modelleket/Simulink modelleket generálni.
+        Az eszköz SysML v2-re való átdolgozása jelenleg is folyamatban van. Jelen dolgozat szempontjából azért fontos, mivel felhasználásával létrehozható a kívánt kétirányú kapcsolat rendszermodellektől a szimulációs modellek felé vezető ága.
+
 
 \section{Jelenlegi problémák a területen}
 A fentiekből látható ezeknek a technológiáknak az előnye, valamint bemutatásra került a környezek, amibe egy új megoldásnak illeszkednie kell.
 Ebben az alfejezetben a területen aktuális problémák kerülnek bemutatásra, mivel a dolgozat célja ezeknek a problémáknak a mérséklése vagy megszüntetése új módszerek kidolgozása révén.
 
-    \subsection{Tervezési módszertanok hiánya}
+    \subsection{Tervezési módszertanok hiánya} \label{ModszertanHianya}
     Módszertani szempontból két komolyabb probléma van a további munka tekintetében.
     Egyrészt, mivel a rendszermodellek és a szimulációs modellek két eltérő reprezentációját adják a rendszereknek, így azok eltérő szerkezetűek.
     A területek összehangolásához célszerű olyan modellstruktúrákat kidolgozni, amely megkönnyíti az együttes alkalmazásukat és elősegíti a különböző szakemberek együttes munkáját ezen az új határterületen.
@@ -230,8 +237,60 @@ Ebben az alfejezetben a területen aktuális problémák kerülnek bemutatásra,
     Ez azt jelenti, hogy a továbbiakban egy ilyen módszer kidolgozásán is lehet -illetve kell- dolgozni, másfelől ez nagyobb flexibilitást enged a további munka során, mivel nem kell már bevett, de számunkra unpraktikus módszerekhez igazodni.
 
     \subsection{Modellek megfeleltetésének hiánya}
-    Bár számos korábbi munka foglalkozott azzal, milyen előnyökkel járna ezeknek a technológiáknak az integrációja (Lásd: //TODO), egy ilyen kapcsolat platformfüggetlen létesítésére még nincsen példa.
+    Bár számos korábbi munka foglalkozott azzal, milyen előnyökkel járna ezeknek a technológiáknak az integrációja (Lásd: \ref{IntegracioElonyei}), egy ilyen kapcsolat platformfüggetlen létesítésére még nincsen példa.
     Olyan integráció, amely egy adott cég termékeit köti létesít hasonló kapcsolatot, a fenti előnyök egy részének érdekében, már létezik, azonban ez a gyártó termékeit köti össze, nem általánosan használható módszer.
 
     \subsection{Izolált V\&V}
     A megfeleltetéshez hasonlóan a V\&V technikák alkalmazásának és munkafolyamatba olvasztásának előnyei már ismertek azonban a gyakorlatban -többek közt a leképezés hiánya miatt- erre még szintén nincs általános megoldás, csupán vendor-specifikus, konkrét eszközökhöz illeszkedő kezdeményezések.
+
+\section{A SysML v2 alapjainak bemutatása}
+Jelen dolgozat célja egy SysML v2 alapú módszertan kidolgozása kiberfizikai rendszerek tervezésére.
+A kidolgozott módszertan megértéséhez azonban szükséges a nyelv alapszintű ismerete. Ezeket az alapfogalmakat tartalmazza a következő leírás.
+
+    \subsection{Elemek és típusok}
+    A nyelvben a legalapvetőbb koncepció a különböző típusok bevezetése és használata, melyhez két fontos fogalom tartozik.
+    \begin{description}
+        \item[Definition] Így nevezzük egy típus létrehozását. Ilyenkor csak azt adjuk meg, hogy egy adott típusú elem milyen tulajdonságokkal rendelkezik, milyen más elemekkel és milyen kapcsolatban áll. Az így kapott definíciót használhatjuk fel az adott típushoz tartozó elemek létrehozására.
+        \item[Usage] Egy konkrét elem létrehozása. Ez történhet definíciók segítségével, vagy létrehozhatunk típus nélküli elemet is, ha tudjuk, hogy nem lesz szükség több hasonló elemre, ezzel elkerülve a felesleges definíciók írását.
+    \end{description}
+
+    \subsection{Fontosabb nyelvi elemek} \label{sec:NyelviElemek}
+    A SysML v2-ben néhány alap építőelemet definiáltak, amelyek kombinálásával leírhatóak a rendszerek. Ezekből az absztrakt építőelemekből definiálhatunk saját, konkrét jelentéssel bíró típusokat a modellek felépítéséhez. A legfontosabb típusok a következőek:
+    \begin{description}
+        \item[Part] Önmagukban is értelmezhető önálló elemek, tipikusan alkatrészek és funkciók leírására.
+        \item[Port] Csatlakozási pontok leírására szolgáló elemek. Fontos hogy ez általánosan, bármilyen csatlakozási pont lehet például egy USB csatlakozó, de akár a tűzcsap és a tűzoltótömlő végén levő fémgyűrűk is.
+        \item[Connection] Két tetszőleges elem közötti kapcsolatot ír le.
+        \item[Interface] Speciális kapcsolat amely két Port kapcsolatát írja le.
+        \item[Allocation] Speciális, irányított kapcsolat két tetszőleges elem között. Egy logikai elem megvalósításának és felelősségeinek hozzárendelése egy fizika elemhez. Például egy tolatóradarnál a felhasználó figyelmeztetését egy hangszóró valósítja meg.
+    \end{description}
+
+    \subsection{Elemek és típusok viszonyai egymáshoz képest}
+    A különböző elemek és típusok nemcsak felhasználhatják egymást saját maguk leírásához, hanem különböző speciális viszonyban is lehetnek egymással.
+    A nyelvben található ilyen viszonyokból a fontosabbak:
+    \begin{description}
+        \item[Specializáció] Egy típus vagy elem specializál egy másikat, ha rendelkezik a másik tulajdonságainak, de valamilyen szempontból szűkít, pontosít azokon. Például Egy motorokra vonatkozó általános leírást specializál egy villanymotor, mert ugyan azokkal a funkciókkal rendelkezik, de a konkrét implementációra már megkötéseket tartalmaz.
+        \item[Redefiníció] Egy konkrét elemet redefiniálható egy őt specializációval, ilyenkor a belső tartalma felülíródik a konkrétabb definíciónak megfelelően.
+    \end{description}
+
+\section{Korábbi módszertanok bemutatása}
+Bár a SysML v2-höz még nincsenek tervezési módszertanok, de elődjéhez több is akad.
+Ezeket azért érdemes áttekinteni röviden, mert a terület jelenlegi állapotáról ezekből kaphatunk képet, illetve készítőik várhatóan ezeket fogják átemelni a SysML v2-be is.
+
+    \subsection{Capella} \cite{Capella2024}
+    A Capella az Arcadia cég saját fejlesztőkörnyezetéhez készült módszertana. A sajátossága, hogy részletesebben felbontja a projektek elején történő követelménymodellezési fázist.
+    Ezen kívül alapvetően domain specifikus kiterjesztésekre támaszkodik, amellyel a felhasználó szabja személyre a módszertant. Ez nagyban megkönnyíti a későbbi munkát, bár újonnan bevezetése így jóval erőforrás igényesebb.
+
+    \subsection{SysMOD} \cite{Weilkiens2020}
+    Általános módszertan rendszertervezésre, a hangsúly itt is a követelményeken és a hasonló előkészítő lépéseken van.
+    Ezen a modellek rendszerezésére tartalmaz ajánlásokat és néhány nyelvi kiterjesztéssel nyújt segítséget néhány feladat elvégzéséhez.
+    Ez a módszertan már átdolgozás alatt áll az új szabványhoz, bár a hozzá kapcsolódó kiterjesztések újraírása valószínűleg hosszabb folyamat lesz.
+
+    \subsection{OOSEM (Object-Oriented Systems Engineering Methodology)} \cite{autoEEsystemEngineer2024}
+    Szintén általános módszertan amely a rendszermodellezés management oldalához ad jóval több támogatást segítséget.
+    Ezzel együtt azonban valamivel több megszorítást ad a tervezési folyamatra. Ezekből a legjelentősebbek, hogy kizárólat top-down tervezést támogat és szigorú sorrendiség van a logikai és fizikai nézetek között.
+    A módszertan támogatja a V\&V technikák reprezentációját a modellben  speciális kapcsolatokkal azonban ezek használata nincsen a módszertanba integrálva, csupán lehetőséget biztosít a használatukra.
+    Ez a módszertan is már átdolgozás alatt áll.
+
+    \subsection{Intel CoFluent} \cite{IntelCorporation2014}
+    Az Intel által kidolgozott módszertan, amely a SysML mellett még két másik modellezési nyelvet használ fel beágyazott informatikai rendszerek tervezésére. Ez a módszertan sajnos nem alkalmazható általános rendszertervezésre, mivel például mechanikai komponensek modellezésére nem alkalmasak.
+    Cserébe a saját szűkebb területén kiemelkedő, képességei vannak. A beágyazott elektronika és szoftver szimulálására támogatást ad, így egy szűk területen biztosítja azokat az előnyöket, amelyek általános rendszerekhez való illesztésének elősegítése jelen dolgozatnak is a témája.
