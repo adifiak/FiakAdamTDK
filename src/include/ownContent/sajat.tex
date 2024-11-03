@@ -1,13 +1,13 @@
 \chapter{Saját kontribúció}
 Ebben a fejezetben kerülnek bemutatásra a téma kapcsán létrejött saját eredmények. Először a megoldás lehetséges módjai kerülnek bemutatásra az előnyeikkel és hátrányaikkal együtt.
-A második alfejezet a rendszerek SysML v2-ben történő modellezéséhez létrehozott módszertanokat mutatja be,amelybe beleépülnek a szimulációs technológiákhoz létrehozott módszerek.
+A második alfejezet a rendszerek SysML v2-ben történő modellezéséhez létrehozott módszertant mutatja be, amelybe beleépülnek a szimulációs technológiákhoz létrehozott módszerek.
 Végül egy konkrét esettanulmányon keresztül bemutatásra kerülnek a leírt módszerek.
 
 \section{Lehetséges megközelítések}
 A modellalapú rendszertervezési és a szimulációs technológiák integrálása módosításokat követel mind a két oldal modelljeiben.
 Ezek a módosítások és tervezési módszerek a két terület közötti kapcsolat, egy kölcsönös megfeleltetés miatt elengedhetetlenek.
 Azonban több különböző lehetőségünk van, ennek a megvalósítására.
-Ez a fejezet ezeket a megközelítéseket veszi sorra és hasonlítja őket össze.
+Ez az alfejezet ezeket a megközelítéseket veszi sorra és hasonlítja össze.
 
     \subsection{Szimulációs fogalmak bevezetése a rendszermodellbe}
     A rendszermodell tekintetében a leglátványosabbak ezek a változások, mivel itt ténylegesen meg kell jelenni a másik szakterületnek, hogy az beolvadhasson a fejlesztési folyamatba.
@@ -15,25 +15,29 @@ Ez a fejezet ezeket a megközelítéseket veszi sorra és hasonlítja őket öss
 
         \subsubsection{Annotáció alapú leképezés}
         Az új fogalmak és tulajdonságok bevezetésére a legkézenfekvőbb megoldás a SysML v2 nyújtotta lehetőség különböző metaadatok bevezetésére.
-        A megoldás lényege, hogy létrehozunk egy importálható fájlt amely minden fontos fogalomhoz tartalmaz egy-egy annotációt, amivel az adott eleme bevezethető.
+        A megoldás lényege, hogy létrehozunk egy importálható fájlt amely minden fontos fogalomhoz tartalmaz egy-egy annotációt, amivel az adott eleme bevezethető. Gyakorlatilag kézzel megcímkézzük, hogy melyek a fizikai és logikai elemek, melyik kapcsolat milyen típusú, stb.
+        
         Ezen kívül lehetőség van szabályokat megadni, amelyek segítenek megakadályozni a hibás használatot, például nem jelölhetjük külön szimulációs egységnek (Például FMU-k.) a követelményeket vagy a köztük lévő logikai kapcsolatot.
+        
         Ezzel a megoldással, a fogalmak bevezetése abból áll, hogy minden elemet ellátunk a megfelelő annotációval és ezek alapján a leképezést létrehozó vagy felhasználó programok ezek segítségével tudják értelmezni, bejárni a rendszermodellt szimulációs szemszögből nézve.
 
         \subsubsection{Szimulációs modellvetület bevezetése}
-        A másik lehetőség, ha bevezetünk egy konkrét területet a modellben -egyfajta nézetet- amely leírja a szimulációs modellt.
+        A másik lehetőség, ha bevezetünk egy konkrét területet a modellben --~egyfajta nézetet~-- amely leírja a szimulációs modellt.
         A rendszermodellezésben alapvetően jelen van ez a szemlélet, a rendszerek tervezésénél egy logikai és egy fizikai modellel dolgoznak a rendszermérnökök.
+        
         Ennél a megközelítésnél egy ezekhez hasonló, harmadik vetületet hozunk be a rendszermodellbe és a rendszermodell elemeit explicite összekötjük az azokat reprezentáló szimulációs elemek modelljével.
         Ezzel a megoldással a szimulációkhoz kapcsolódó fogalmak, csak a vonatkozó nézetben jelennek meg.
+        
         Magának a nézetnek a megvalósításához célszerű készíteni egy nyelvi kiterjesztést.
         Ez a SysML v2 adta lehetőség arra, hogy szakterület specifikus típusokat hozhassunk létre.
         Ennek az eszköznek a használata célszerűbb ennél a megközelítésnél, mert itt egy konkrét szakterület szerinti modellt alkotunk.
         Nincs szükség az annotációk flexibilitására, cserébe a használata egyszerűbb, jobban kikényszeríthető a megfelelő struktúra alkalmazása, mint ha csak különböző annotációkat adnánk az egyes elemekhez.
 
-        \subsubsection{Lehetőségek összehasonlítása}
+        \subsubsection{Lehetőségek összehasonlítása} \label{sec:ReMoOsszehasonlitas}
         Az annotáció alapú megközelítés előnye könnyen látható. Az, hogy a meglévő modell elemeit felcímkézzük, lehetővé téve a leképezést, azt jelenti, hogy minimális többletmunkára van szükség az eddigiekhez képest.
         A kevesebb nézet szerinti modellezés kevesebb munkát igényel, így a fejlesztés gyorsabban haladhat.
         
-        A módszernek azonban van három komoly hátránya is, amelyek a második módszer mellett könnyen megoldhatóak.
+        A módszernek azonban van három komoly hátránya is, melyek a második módszer használata mellett nem okoznak problémát.
 
         Ha a teljes modellben jelen vannak az új szakterület fogalmai, az azt jelenti, hogy mindenkinek tisztában kell lenni azokkal, hogy dolgozni tudjon.
         Ez azt jelenti, hogy minden rendszermérnököt külön szimulációs technológiákra vonatkozó képzésben kell részesíteni.
@@ -43,22 +47,22 @@ Ez a fejezet ezeket a megközelítéseket veszi sorra és hasonlítja őket öss
         Egy általános modellstruktúra leképezéséhez a feladatot ellátó szoftvereknek is jóval komplexebbnek kell lenniük, mintha egy előre ismert struktúra mentén dolgoznának.
 
         A harmadik probléma, hogy az elemeken elhelyezett annotációk egyféle képpen címkézik fel a modellt, azaz egyetlen szimulációs modellt írnak le.
-        A szimulációk során azonban rendszerint számos különböző modellt használnak, az aktuális igényeknek megfelelően, ezek között szükséges hogy lehessen váltani, a komponensek különböző modelljeiből több összeállítást készíteni.
+        A szimulációk során azonban rendszerint számos különböző modellt használnak, az aktuális igényeknek megfelelően, ezek között szükséges, hogy lehessen váltani, a komponensek különböző modelljeiből több összeállítást készíteni.
+        
         Ehhez vegyünk például egy robotot és annak tápegységét.
-        Amikor a tápegységet fejlesztjük, fontos, hogy a benne zajló jelenségeket minél pontosabban modellezzük. például egy kapcsoló üzemű tápegységnél a benne használt tranzisztorok pontos viselkedése elengedhetetlen a hatékonyság és a kimenő vezetékeken megjelenő zaj optimalizálásához, a követelmények teljesülésének vizsgálatához.
+        Amikor a tápegységet fejlesztjük, fontos, hogy a benne zajló jelenségeket minél pontosabban modellezzük. Például egy kapcsoló üzemű tápegységnél a benne használt félvezető alkatrészer pontos viselkedése elengedhetetlen a hatékonyság és a kimenő vezetékeken megjelenő zaj optimalizálásához, a követelmények teljesülésének vizsgálatához.
         Azonban amikor a robotunk vezérlését teszteljük, akkor rendszerint érdektelen számunkra, hogy tökéletesen pontosan ismerjük a fenti paramétereket, az a fontos, hogy az adott mozgások okozta terhelést képes-e kielégíteni a rendszer, illetve körülbelül mekkora a fogyasztása.
         Ezt a problémát úgy oldják meg, hogy több, különböző részletességű modellt készítenek, az egyes feladatokhoz.
         Persze használható minden feladatra a legrészletesebb modell, azonban az extra részletek sokszor nem jelentenek lényeges különbséget, míg a szimuláció számításigényét jelentősen megemelhetik.
 
         A szimulációs modellhez tartozó nézet bevezetése megoldja a fenti problémákat.
-
         Azzal, hogy egy konkrét modellrészletre korlátozzuk a speciális tudást igénylő munkafolyamatokat, lehetőség nyílik egyetlen, specializált szakemberekből álló csoportra bízni ezt a feladatot.
         A többi mérnöknek nem kell további képzés, a specializált szakemberek pedig jobb minőségű munkát végezhetnek a terület behatóbb ismeretének köszönhetően.
 
-        Az előre ismert struktúra és a domain-specifikus modellezési eszközök bevezetése megkönnyíti a modelleket és az eszköztámogatást készítők munkáját is.
+        Az előre ismert struktúra és a doménspecifikus modellezési eszközök bevezetése megkönnyíti a modelleket és az eszköztámogatást készítők munkáját is.
 
         Azzal, hogy a különböző szimulációs funkciókat nem kötjük hozzá direkt módon a rendszermodell elemeihez, lehetőség nyílik, hogy a szimulációs nézetben több szimulációs modellt is kapcsoljunk egy rendszerkomponenshez.
-        Ez lehetővé teszi az eltérő részletességű modellek bevezetését, valamint a HiL és SiL technológiákhoz kapcsolódó szimulációs modellek is könnyen kezelhetőek egy extra verzióként.
+        Ez lehetővé teszi az eltérő részletességű modellek bevezetését, valamint a HiL és SiL technológiákhoz kapcsolódó szimulációs modellek is könnyen kezelhetőek egy-egy extra verzióként.
 
         A fentiek alapján látható, hogy az új nézet bevezetése jobban illeszkedik a technológiák alkalmazásához, jobb minőségű modelleket tesz lehetővé és a speciális szaktudás igényének csökkentésével az ilyen módszerek egyszerűbben és olcsóbban vezethetőek be a gyakorlatban.
         Ezek alapján a további munka során erre a megközelítésre összpontosítunk.
@@ -69,36 +73,45 @@ Ez a fejezet ezeket a megközelítéseket veszi sorra és hasonlítja őket öss
 
         \subsubsection{Leképezés a Modelica teljes eszközkészletével}
         A Modelica nyelvet kifejezetten fizikai rendszerek leírására és szimulációjára fejlesztették ki.
-        Ennek köszönhető gazdag eszközkészlete, a különböző jelenségek leírására.
+        Ennek köszönhető gazdag eszközkészlete van a különböző jelenségek leírására.
+        
         Az első megközelítés, hogy ezeknek az eszközöknek mindegyikét szabadon használjuk a rendszer leírásához, mivel a minél pontosabb modellek érdekében hozták létre ezeket a nyelvi elemeket.
-        Ilyen eszköz a külső változók használata, amelyek a környezeti hatások, mint például a gravitáció megadását teszik lehetővé. Ez azért fontos mert például egy bolygó modelljében, csak azt tüntetjük fel, hogy van ilyen érték és ez hogyan befolyásolja ezt a modellelemet, azonban a számítását a környezetre bízza, így könnyebben újrahasználható és logikusabban strukturált modelleket kapunk.
-        A másik fontos lehetőség az úgynevezett akauzális csatlakozók használata. Ezek irányítatlan kapcsolatokat jelölnek, ami azt jelölő, hogy a kapcsolat két vége valamilyen szempontból egyenlő egymással. Jó példa erre az áramköri elemek beépített modellkönyvtára. A kapcsolat itt a kapcsolási rajzok vezetékeivel analóg módon viselkedik, az áram mindkét irányba folyhat az adott kapcsolaton és mindkét oldalán található komponensek befolyásolják ennek mértékét.
-        Ez szintén olyan jelenség, amely a világban igen gyakran megfigyelhető -gyakorlatilag minden fizikai mennyiségnél-, és rengeteg segítséget nyújt, amikor ilyen viselkedést kell modellezni.
+        Ilyen eszköz a külső változók használata, amelyek a környezeti hatások, mint például a gravitáció megadását teszik lehetővé. Ez azért hasznos, mert például égitestek modelljében, csak azt tüntetjük fel, hogy hat a testre ilyen erő és ez hogyan befolyásolja, azonban a számítását a környezetre bízza. Így könnyebben újrahasználható és logikusabban strukturált modelleket kapunk, hiszen nem egy adott égitesttől függ, hogy milyen erők hatnak rá hanem a környezetét alkotó égitestek alkotta rendszer sajátja ez a dinamika.
+        
+        A másik fontos lehetőség az úgynevezett akauzális csatlakozók használata. Ezek irányítatlan kapcsolatokat jelölnek, ami azt jelöli, hogy a kapcsolat két vége valamilyen szempontból egyenlő egymással. Jó példa erre az áramköri elemek beépített modellkönyvtára. A kapcsolat itt a kapcsolási rajzok vezetékeivel analóg módon viselkedik, az áram mindkét irányba folyhat az adott kapcsolaton és mindkét oldalán található komponensek befolyásolják ennek mértékét.
+        Ez szintén olyan jelenség, amely a világban igen gyakran megfigyelhető, és rengeteg segítséget nyújt, amikor ilyen viselkedést kell modellezni.
+        
         Könnyen belátható, hogy ezeknek a lehetőségeknek a korlátlan kihasználása mennyivel egyszerűbbé teszi a szimulációs modellek megalkotóinak munkáját.
 
         \subsubsection{FMI kompatibilis leképezés} \label{sec:fmiKompat}
         Az FMI szabványt azért hozták létre, hogy az egyes modelleket könnyen át lehessen vinni egyik eszközből a másikba, illetve megoszthatóak, újrahasználhatóak legyenek az önálló logikai egységek.
         Ez egy olyan képesség, amit célszerű kihasználni az összetett rendszerek tervezése során, ez azonban megszorításokat kényszerít a modellekre.
+        
         Az eszközfüggetlenség ugyanis azt jelenti, hogy a szabvány csak a létező legalapvetőbb adatkapcsolatokat teheti lehetővé, amelyek minden eszközben elérhetőek lesznek.
         Ez a gyakorlatban azt jelenti, hogy kizárólag egész és racionális számok valamint logikai értékek szerepelhetnek a csomag ki és beviteli csatlakozóin és ezek a kapcsolatok kizárólag egyirányúak lehetnek.
+        
         Az ilyen megkötések mellett modellezett komponensek alakíthatóak át FMU-vá, hogy hordozhatóvá tegyék őket.
         Az FMI szempontjából csak a komponens és a környezetének kapcsolata számít, tehát csak azoknak a jeleknek kell megfelelni ezeknek a kritériumoknak, amelyek áthaladnak a komponens határain.
 
         \subsubsection{Lehetőségek összehasonlítása}
         A fentiek alapján látható, hogy ebben a kérdésben nincsen olyan határozott válasz, mint a rendszermodellek esetében.
         Ahhoz, hogy a modellek minél jobban legyenek rendezve és minél egyszerűbben tegyék lehetővé a rendszerek leírását, használnunk kell az erre szolgáló eszköztárat.
-        Ezek az eszközök azonban kizárják a modellek hordozhatóságát, amely elengedhetetlen komplex -több szakterületet érintő- rendszerek esetében, vagy több független szereplő együttműködése esetén.
+        Ezek az eszközök azonban kizárják a modellek hordozhatóságát, amely elengedhetetlen komplex --~több szakterületet érintő~-- rendszerek esetében, vagy több független szereplő együttműködése esetén.
+        
         Az első lépés ennek a problémának a feloldására, hogy jól definiáljuk, mely komponenseket szeretnénk FMU-vá alakítani, mivel a modellezési eszközök csak ezek határain kerülnek megszorításra.
-        Ha továbbra is gondot jelentenek a megkötések, akkor célszerű két részre bontani az adott komponenst -ha ez lehetséges-.
-        Az első rész adja az FMU-t, amely tartalmaz minden olyan logikát, amelyet nem szeretnénk megosztani, és elfogadható nehézséggel kommunikál a komponens modelljének maradék részével a megszorítások mellett is.
+        
+        Ha továbbra is gondot jelentenek a megkötések, akkor célszerű két részre bontani az adott komponenst.
+        Az első rész adja az FMU-t, amely tartalmaz minden olyan logikát, amelyet nem szeretnénk megosztani, és a megszorítások mellett is elfogadható nehézséggel kommunikál a komponens modelljének maradék részével.
         A második rész a minimális modellt tartalmazza, amely a megszorított kommunikációs módokat átalakítja egy eszköz specifikus, de könnyen használható interfésszé.
         Fontos, hogy ezek az adapterelemek minél egyszerűbbek legyenek, mivel ezeket minden támogatni kívánt eszközben külön el kell készíteni, valamint ezekre nem terjed ki a források védelme, mivel nem alakíthatóak FMU-vá.
-        Hasonló technikával próbálták már feloldani az akauzális kapcsolatok hiányát, de a módszer még nem elég kiforrott és az alkalmazása csak automatizáció után lehet valós alternatíva a gyakorlati alkalmazásokban. \cite{Hirano_2015}\cite{Fish2023}
+        
+        Hasonló technikával próbálták már feloldani az akauzális kapcsolatok hiányát, de a módszer még nem elég kiforrott és az alkalmazása csak automatizáció után lehet valós alternatíva a gyakorlatban~\cite{Hirano_2015, Fish2023}.
+        
         Ezen felül, felmerült már az FMI szabvány kiterjesztése is az akauzális kapcsolatok támogatására, azonban ez még csak elméleti lehetőségként létezik, így szabványos megoldás egyenlőre nem várható.
 
 \section{Modellezési módszertan}
 Mint ahogy az a \ref{ModszertanHianya} részben is szerepelt, a SysML v2-höz még nincs kiforrott tervezési módszertan, így az eredményeink tesztelésének érdekében ki kellett dolgozni egy sajátot, amelybe integrálhatóak a szimulációs lépések is.
-A következőkben bemutatásra kerül a kidolgozott módszertan jelenlegi állása, amellyel a fejlesztés során használt rendszermodellek is készültek.
+A következőkben bemutatásra kerül a kidolgozott módszertan, amellyel az esettanulmányban használt rendszermodellek is készültek.
     
     \subsection{A fejlesztés során felmerült problémák} \label{ProblemsToSolve}
     Természetesen a modellezési módszerek nem úgy jönnek létre, hogy néhány hétnyi gondolkodás után megszületik a végleges megoldás, amely a továbbiakban gond nélkül alkalmazható.
@@ -114,18 +127,20 @@ A következőkben bemutatásra kerül a kidolgozott módszertan jelenlegi állá
         
         \subsubsection{Komponensek kohéziója a tervezés első fázisaiban}
         Bár a fentiekből látható, hogy a logikai és fizikai modellek elválasztása fontos, azonban éppen ilyen káros az is, ha az adott komponenst különböző nézetekből leíró modellek között semmilyen kapcsolat nincs, hiszen ez téves feltételezés.
+        
         A nézetek teljes függetlensége arra is lehetőséget biztosít, hogy a tervezők véletlenül két külön alkatrész logikai és fizikai modelljét gondolják összetartozónak.
-        Például egy repülőgép esetén elképzelhető, hogy felcserélődik két vezérsík megfelelő modellje. ez azt eredményezné, hogy ha a pilóta az egyiket alkalmazná valamilyen manőver során, akkor a kért mozgás a másikon jelentkezne, tehát a kért pályamódosítás helyett agy teljesen másik történne meg.
+        Például egy repülőgép esetén elképzelhető, hogy felcserélődik két vezérsík megfelelő modellje. Ez azt eredményezné, hogy ha a pilóta az egyiket alkalmazná valamilyen manőver során, akkor a kért mozgás a másikon jelentkezne, tehát a kért pályamódosítás helyett agy teljesen másik történne meg.
         Egy ilyen szituáció valószínűleg katasztrofális következményekkel járna.
+        
         Persze a gépek ellenőrzése elméletben feltárná ezeket a hibákat, de akkor már számos kész, hibás repülőt kellene javítani a szériahibák felfedezése után.
-        Azért hozunk létre fejlesztési módszertanokat, hogy ne ezek az ellenőrzések tárják fel a hibákat, hanem lehetőleg lehetőségük se legyen létrejönni.
+        Azért hozunk létre fejlesztési módszertanokat, hogy ne ezek az ellenőrzések tárják fel a hibákat, hanem lehetőségük se legyen létrejönni.
         Ez nemcsak jóval olcsóbb hosszútávon, de jóval biztonságosabb is, mivel az elképzelés, hogy az ellenőrzés feltár minden hibát feltételezi, hogy az ellenőrző folyamat maga nem hibás, ami természetesen nem feltételezhető kritikus rendszerek esetében.
 
         \subsubsection{Modellstruktúra átláthatósága}
         A fent említett két nézeten kívül még számos dolog jelenik meg egy rendszermodellben.
         Célszerű olyan módszertant létrehozni, amely mindegyiknek meghatároz egy pontos helyet, ahol a modellben elhelyezkedik, hogy könnyen lehessen navigálni a források között és mindenki számára átlátható legyen.
         A legjobb, ha ezek nem csak szabályokként jelennek meg, hanem a módszer olyan vázat is biztosít a munkának, amely kikényszeríti a megfelelő felépítést.
-        \footnote{A gyakorlatban ez azt jelenti, hogy legyen kényelmes és egyszerű ezt használni a biztosított eszközökkel. A tényleges garancia nehezen kényszeríthető ki, de a legkisebb ellenállás elve a gyakorlatban mégis eléri ezt az eredményt.}
+        \footnote{A gyakorlatban ez azt jelenti, hogy legyen kényelmes és egyszerű ezt használni a biztosított eszközökkel. A struktúrára tényleges garancia nehezen kényszeríthető ki, de a legkisebb ellenállás elve a gyakorlatban mégis eléri ezt az eredményt.}
 
         \subsubsection{Hierarchikus tervezés támogatása} \label{sec:Hierarhia}
         A műszaki tudományok minden területén bevett gyakorlat, hogy különböző hierarchiákat vezetünk be a tervezés során.
@@ -135,23 +150,27 @@ A következőkben bemutatásra kerül a kidolgozott módszertan jelenlegi állá
         \subsubsection{Szimulációs modellek vetületei, variánsainak reprezentálása} \label{sec:SzimIntKov}
         Jelen dolgozat célja, hogy kapcsolatot teremtsen a szimulációs és a rendszermodellek között egy új tervezési módszertan kidolgozásával.
         Mivel a szimulációk a fejlesztési folyamat részei, így ez alapvetően a rendszermodellben jelenti új elemek megjelenését.
+        
         A szimulációs modelleknek tehát valamilyen formában meg kell jelenniük a rendszermodellekben.
         Ezeknek a lenyomatoknak a kapcsán fontos kiemelni egy lényeges különbséget a két modelltípus között.
         Míg egy konkrét rendszerhez jellemzően egy rendszermodell tartozik, addig szimulációs modellből több is készülhet egy komponenshez, hogy különböző szempontokból vagy különböző részletességgel mutassák be azt.
+        
         Ha az a célunk, hogy ennek a technológiának a teljes potenciálját kihasználjuk, akkor elengedhetetlen támogatni több ilyen modell elkészítését.
 
         \subsubsection{A modellek újrahasználásának megkönnyítése} \label{sec:Ujrahasznalas}
         A tervezési folyamatok során gyakran kerülnek felhasználásra már kész, általános célú elemek.
         Ennek előnye, hogy a gyakran használt elemeket elég egyszer megtervezni és tesztelni, utána számos alkalommal újrahasználhatóak.
+        
         Ha lehetőség van egyszerűen felhasználni az ilyen modelleket a tervezés során az sokat gyorsít és egyszerűsít a folyamaton.
         Ennek érdekében olyan módszertanra van szükség ami egységes megoldást ad erre a problémára, mivel így a gyártók készíthetik el a saját termékük modelljeit, ahelyett, hogy minden megrendelőjük saját verziót kellene készítsen.
-        Tehát minél jobb támogatást nyújt a módszertan a modellek újrafelhasználására, annál nagyobb az általa biztosított várható nyereség.
+        
+        Tehát minél jobb támogatást nyújt a módszertan a modellek újrafelhasználására, annál jobban támogatja annak használóit és annál valószínűbb, hogy a gyakorlatban is jól alkalmazható lesz.
 
     \subsection{A kidolgozott módszertan bemutatása}
     A dolgozat fő eredménye egy a fenti elvárásoknak megfelelő módszertan elkészítése, melynek a végső verziója kerül most bemutatásra. A módszer evolúciójának részletes bemutatása túlmutat a dolgozat keretein, azonban a \ref{ProblemsToSolve} részben kiemelt pontok alapján nyomon követhető az egyes elemek mögött meghúzódó motiváció.
         
         \subsubsection{Alapgondolatok} \label{sec:Alapgondolatok}
-        A módszertan megértésének legjobb módja, az általa létrehozandó modellek szerkezetének megértése. Mielőtt a teljes modellt megvizsgálnánk, vegyünk egy egyszerűsített képet az alapvető mögöttes elképzelésről, amelyre ráépülnek majd a különböző lépések. Ez az alapvető struktúra a \ref{fig:Alapstruktura} ábrán láthatóak.
+        A módszertan megértésének legjobb módja, az általa létrehozandó modellek szerkezetének megértése. Mielőtt a teljes modellt megvizsgálnánk, vegyünk egy egyszerűsített képet az alapvető mögöttes elképzelésről, amelyre ráépülnek majd a különböző lépések. Ez az alapvető struktúra a \ref{fig:Alapstruktura} ábrán látható.
         A modelleknek ebben a felosztásban négy fő eleme van. A fizikai és logikai nézetek a \ref{sec:LogFiz} résznek megfelelően megjelennek, míg a kapcsolatukat az allokációk határozzák meg.
         Ez egyetlen rész, amely az eddigiek alapján meglepő, az a szimulációs modellek allokációkon belüli elhelyezése.
         \begin{figure}[!ht]
@@ -162,14 +181,15 @@ A következőkben bemutatásra kerül a kidolgozott módszertan jelenlegi állá
         \end{figure}
 
         Ennek oka, az a mögöttes gondolat, hogy a rendszereket igazából egy allokációval lehet leírni. Mivel ez a gondolat elsőre nehezen átlátható vegyünk egy példát.
-        Amikor egy autót akarunk leírni, logikusnak tűnik egy \emph{Part} ként tekinteni rá -ez a jelenleg bevett módszer is-, mivel az \ref{sec:NyelviElemek} résznek megfelelően ez egy önmagában értelmes elem a modellben.
+        Amikor egy autót akarunk leírni, logikusnak tűnik egy \emph{Part} ként tekinteni rá --~ez a jelenleg bevett módszer is~--, mivel az \ref{sec:NyelviElemek} résznek megfelelően ez egy önmagában értelmes elem a modellben.
         Azonban amikor egy autóról beszélünk, akkor igazából valamilyen konkrét funkcióra és annak bizonyos megkötések mellett történő megvalósítására gondolunk.
-        Nem nevezünk valamit autónak, csak mert úgy néz ki, mint egy autó, vagy ha más funkciót lát el. Ha egy óriáskerék kabinjait autókból építjük meg, akkor azokat nem tekintjük autóknak, még akkor sem ha a folyamat során teljesen működőképesek maradnak, mert már nem az a funkció tartozik hozzájuk amit egy autótól elvárunk.
-        Ugyan nem nevezzük autónak a Csillagok háborújának ikonikus homoksiklóját sem, hiába nyilvánvaló a nézőknek, hogy az autók megfelelői az adott világban, a szerkezete, amivel ezt megvalósítja eltér attól amit egy autótól elvárunk, mert forgó kerekek helyett lebeg és egy hajtómű tolja előre.
+        
+        Nem nevezünk valamit autónak, csak mert úgy néz ki, mint egy autó, vagy ha más funkciót lát el. Ha egy óriáskerék kabinjait autókból építjük meg, akkor azokat a továbbiakban nem tekintjük autóknak, még akkor sem ha a folyamat során teljesen működőképesek maradnak, mert már nem az a funkció tartozik hozzájuk amit egy autótól elvárunk.
+        Ugyancsak nem nevezzük autónak a Csillagok háborújának ikonikus homoksiklóját sem, hiába nyilvánvaló a nézőknek, hogy az autók megfelelői az adott világban. A szerkezete, amivel ezt megvalósítja eltér attól amit egy autótól elvárunk, mert forgó kerekek helyett lebeg és egy hajtómű tolja előre.
 
         Elsőre nehéz látni, miért fontos, hogy magát a rendszert egy másik absztrakt elemmel írjuk le, ha az eddigi megközelítés is működött. Ennek oka a későbbiekben fog látszani, mivel ez a személetváltás tette kiemelt elemmé az allokációkat a kidolgozott módszertanban.
         Tervezés közben magától értetődő gondolat, hogy a modellek finomítása attól függ milyen funkciót és milyen eszközzel akarunk megvalósítani.
-        Ennek ellenére a bevett tervezői gyakorlatban az allokációkat inkább befejező lépésnek tekintik, nem a folyamat mozgatórugójának. Persze így is létrejönnek végül a modellek, de csak több iteráció után, amikor sikerült a logikai és fizikai nézeteket egymáshoz illeszteni.
+        Ennek ellenére a bevett tervezői gyakorlatban az allokációkat inkább befejező lépésnek tekintik, nem a folyamat mozgatórugójának. Persze így is létrejönnek végül a modellek, de csak több iteráció után, amikor sikerült a logikai és fizikai nézeteket egymáshoz igazítani.
         A szemléletváltás után, amikor kiemelt figyelmet szentelünk ennek a megfeleltetési folyamatnak, felfedezhető, hogy ezek az információk, amelyek a fent leírt összeillesztést vezérlik, végig jelenvoltak az allokációkban, csupán figyelmen kívül maradtak a művelet helytelen szemlélete miatt.
 
         A szimulációs modellek is ezért kaptak helyet, az allokációkon belül, mivel azok a konkrét rendszert reprezentálják, ami a két modellnézet közti megfeleltetés.
@@ -177,31 +197,32 @@ A következőkben bemutatásra kerül a kidolgozott módszertan jelenlegi állá
 
         \subsubsection{A modellek belső szerkezete} \label{sec:ModellekSzerkezete}
         Maga a módszertan három nagyobb fázisra osztható, melyek a \ref{fig:ModellStruktúra} ábrán láthatóak. Ezek egymás utáni fázisokban épülnek egymásra, így a bemutatásuk is így történik a továbbiakban.
-        Az ábrák a továbbiakban konzisztensen ugyan azzal a színnel jelölik az adott fázishoz tartozó elemeket, megkönnyítendő az értelmezést.
+        Az ábrák konzisztensen ugyanazzal a színnel jelölik az adott fázishoz tartozó elemeket, megkönnyítendő az értelmezést.
         \begin{figure}[!ht]
             \centering
             \includegraphics[width=150mm, keepaspectratio]{figures/AllocationBased2HU.drawio.png}
-            \caption{A modellek alapvető struktúrája} 
+            \caption{A módszertan szerint készült modellek általános szerkezete} 
             \label{fig:ModellStruktúra}
         \end{figure}
 
-        Az első fázis a "fekete doboz modell" összeállítása. Ebben a lépésben még semmilyen implementációval kapcsolatos kérdésről nem szabad dönteni, a hangsúly a rendszerrel szemben támasztott követelmények meghatározásán van.
+        Az első fázis a \emph{Fekete doboz modell} összeállítása. Ebben a lépésben még semmilyen implementációval kapcsolatos kérdésről nem szabad dönteni, a hangsúly a rendszerrel szemben támasztott követelmények meghatározásán van.
         Az implementációs kérdések mellőzése azért kiemelten fontos, mert ha a tervezők elkezdenek egy konkrét megoldásban gondolkozni akkor az túl korán beszűkíti a lehetőségeket a megvalósítások tekintetében és elterelheti a figyelmet fontos kérdésekről a követelmények terén.
         A követelményeken kívül olyan előkészítő lépések kapnak még helyet ebben a fázisban mint a projektváz kialakítása, esetleg alkatrészkönyvtárak összegyűjtése, bár itt vigyázni kell nehogy implementációs kérdésekbe bonyolódjunk.
         A modell váza a \ref{fig:ModellStruktúra} ábrán látható a zöld színnel jelölt területen amely ennek a fázisnak felel meg.
+        
         Fontos, hogy tényleges tartalom csak a \emph{Követelmények}-ben található, a többi elem csak egy váz része. Ebben a vázban megfigyelhető egy gyökérelem, amely összefogja a rendszert, valamint látszik hogy ennek a rendszernek, mint egésznek kell teljesíteni a követelményeket.
         A rendszer tartalmazza továbbá a \ref{sec:Alapgondolatok} részben tárgyalt alapstruktúrát.
         Ezeknek az üres elemeknek a szerepe, hogy a továbbiakban erre tudnak majd ráépülni a különböző modellrétegek.
 
-        Először a \emph{Magas szintű modell} elkészítése következik. A logikai modellben definiáljuk, hogy milyen részfeladatokra bontva és hogyan oldjuk meg a rendszertől elvárt működés biztosítását.
+        Ezután a \emph{Magas szintű modell} elkészítése következik. A logikai modellben definiáljuk, hogy milyen részfeladatokra bontva és hogyan oldjuk meg a rendszertől elvárt működés biztosítását.
         A fizikai modellben megadjuk milyen alrendszerek és alkatrészek segítségével biztosítjuk ezeknek a logikai feladatoknak az elvégzését.
         Végül az \emph{Előzetes allokációkkal} hozzárendeljük a feladatokat ezekhez a fizikai komponensekhez.
         
         A módszertan szempontjából legfontosabb részlet, hogy ezek az \emph{Előzetes allokációk} egyetlen logikai elemet több fizikaihoz is hozzárendelnek. Ez a végleges modellben már nem lenne előnyös, mert mindig pontosan egy felelősre van szükség egy adott feladat végrehajtásánál, de a magas szintű terveknél éppen ezt szeretnénk elérni.
         Ennek oka, hogy a fizikai és logikai nézeteket nem véletlenül választottuk külön, az egyes vetületekben a komponensek határai tipikusan eltérnek, átlapolódnak.
         Ha ez nem így lenne, akkor valószínűleg nem sikerült rendesen elválasztani a két nézetet, tehát ez egyik túl nagy mértékben meghatározta a másikat vagy már túlzottan belemerültünk az implementáció részleteibe. Mindkét eset könnyen vezethet szuboptimális megoldásokhoz és nehezen átlátható modellekhez. (Lásd: \ref{sec:LogFiz})
-        A célunk, hogy ezeket a többszörös allokációkat fel tudjuk használni a modell további finomítása során. Ez a rejtett információ az, amely korábban sokszor iteratív finomítással került feltárásra, pedig helyes allokációkkal könnyen feltárhatóak.
-
+        
+        A célunk, hogy ezeket a többszörös allokációkat és mögöttes jelentésüket fel tudjuk használni a modell további finomítása során. Ez a rejtett információ az, amely korábban sokszor iteratív finomítással került feltárásra, pedig helyes allokációkkal és azok vizsgálatával könnyen átlátható.
         A következő fázis előtt fontos kitérni arra, hogy mi is okozza pontosan a többszörös allokációkat, illetve milyen információt hordoznak a későbbi lépések számára.
         
         A fő ok, hogy a kérdéses logikai feladatot több fizikai komponens együttes munkája képes ellátni. Ebben az esetben ezt a feladatot tovább kell bontani az alapján, hogy milyen részfeladatokat melyik komponens valósít majd meg.
@@ -209,13 +230,14 @@ A következőkben bemutatásra kerül a kidolgozott módszertan jelenlegi állá
         Ha már ezen a szinten elvégeznénk a feladatok felosztását a fizikai komponensek függvényében, akkor az megnehezítené a modell átlátását, mert megfosztana minket a hierarchikus tervezési módszerektől amelyeket a \ref{sec:Hierarhia} részben tárgyaltunk.
         
         A másik lehetséges ok a biztonságkritikus rendszerekkel szembeni követelményekből és azok teljesítéséből adódik. Név szerint a redundáns alrendszerekből. Ha csökkenteni akarjuk egy alrendszer meghibásodásának esélyeit akkor gyakran az egyetlen ésszerű megoldás az, ha több példányt is beépítünk belőle a rendszerbe, amelyek külön-külön is képesek ellátni a feladatukat.
-        Ennek előnye, hogy annak jóval kisebb az esélye, hogy több is meghibásodik a kérdéses rendszerből\footnote{Független hibaokokat feltételezve. Ha ezt nem feltételezhetjük, akkor diverz tervezéssel védekezhetünk, ahol a duplikált alrendszerek nem pontos mások. Csak a velük szembeni követelmények azonosak, az implementáció minél eltérőbb, minimalizálandó az összefüggő hibaokokat.}, így tovább növelhettük a rendszer megbízhatóságát.
+        Ennek előnye, hogy annak jóval kisebb az esélye, hogy több is meghibásodik a kérdéses rendszerből\footnote{Ez az állítás csak független hibaokokat feltételezve érvényes. Ha ezt nem feltételezhetjük, akkor diverz tervezéssel védekezhetünk, ahol a duplikált alrendszerek nem pontos mások. Csak a velük szembeni követelmények azonosak, az implementáció minél eltérőbb, minimalizálandó az összefüggő hibaokokat. Például hiába használunk több GPS modult helymeghatározásra, ha nem az egyes modulok hanem maga a GPS hálózat válik működésképtelenné, akkor a redundancia önmagában nem nyújt védelmet.}, így tovább növelhettük a rendszer megbízhatóságát.
         A redundancia implementálása szintén későbbi lépésekben célszerű, felesleges bizonyos részfeladatok duplikálásával bonyolítani az áttekinthetőséget célzó magas szintű terveket, amikor ennek oka a konkrét implementációval szemben támasztott elvárások.
 
         A harmadik fázis a \emph{Részletes modell} megalkotása.Ebben a lépésben finomítjuk tovább a fentiekben leírtak szerint a modellt, hogy megkapjuk a már említett egy-egy kapcsolatokat létrehozó allokációkat.
         A \ref{fig:ModellStruktúra} ábrán látható, hogy ez esetben az új elemeket nem tartalmazza az eggyel korábbi lépés, hanem az új elemek \emph{specializálják} a magas szintű komponensmodelleket.
-        Ennek oka, hogy az egyes alkatrészek között több lehetséges felosztás is lehetséges. Azzal, hogy egy specializációval leválasztjuk ezt a réteget a magas szintű tervekről, lehetőségünk van több leszármazottat definiálni, amelyek a szimulációs modellek segítségével összehasonlíthatóak lesznek teljesítmény szempontjából.
-        A több lebontás kapcsán gondolhatunk arra, hogy hogyan osztunk meg szoftverkomponenseket több processzor között a fogyasztás, válaszidő vagy pontosság alapján optimalizálva. De ugyanígy lehet szó arról, hogy a magas szintű modellben csak azt határoztuk meg, hogy egy adott gyártó melyik termékcsaládjából választunk villanymotort egy adott feladatra, amely a vezérlés szempontjából már elegendő magas szinten, és csak a specializáció után választunk konkrét típust, amikor már pontosabb adataink vannak a várható terhelésről.
+        
+        Ennek oka, hogy a feladatoknak az egyes alkatrészek között több lehetséges felosztás is lehetséges. Azzal, hogy egy specializációval leválasztjuk ezt a réteget a magas szintű tervekről, lehetőségünk van több leszármazottat definiálni, amelyek a szimulációs modellek segítségével összehasonlíthatóak lesznek teljesítmény szempontjából.
+        A több lebontás kapcsán gondolhatunk arra, hogy hogyan osztunk meg szoftverkomponenseket több processzor között a fogyasztás, válaszidő vagy pontosság alapján optimalizálva. De ugyanígy lehet szó arról, hogy a magas szintű modellben csak azt határoztuk meg, hogy egy adott gyártó melyik termékcsaládjából választunk például villanymotort egy adott feladatra, amely a vezérlés szempontjából már elegendő magas szinten, és csak a specializáció után választunk konkrét típust, amikor már pontosabb adataink vannak a várható terhelésről.
 
         Maga a lebontás először a logikai elemek dekompozícióját jelenti a fizikai komponensek alapján, ezzel létrehozva a \emph{Platform-specifikus logikai komponens modelleket}.
         A következő lépés a fizikai komponensek konfigurálása. Ez a különböző paramétereik meghatározását jelenti úgy, hogy ezzel készek legyenek a megfelelő feladatok ellátására.
@@ -225,9 +247,12 @@ A következőkben bemutatásra kerül a kidolgozott módszertan jelenlegi állá
         \subsubsection{A fejlesztés menete} \label{sec:flow}
         Az előző fejezetben már látható volt, hogy milyen főbb lépésekre tagolódig a rendszertervezés a módszertan használatával, de a modell szerkezete csupán egy egyszerűsített képet ad erről.
         Ebben a részben ez a folyamat kerül részletesebb bemutatásra.
-        Az első fontos észrevétel, hogy míg a \ref{fig:Alapstruktura} ábrán látható, hogy az allokációk szimulációs modelleket tartalmaz(hat)nak, míg a \ref{fig:ModellStruktúra} ábrán ezek nem voltak jelölve.
-        Ez a változtatás csupán az ábra átláthatósága miatt történt, ezek a modellek továbbra is be vannak ágyazva az allokációkba, csupán az egyébként is összetett ábráról lettek lehagyva a megértés megkönnyítésének érdekében.
+        
         Maga a fejlesztési folyamat a \ref{fig:Folyamat} ábrán látható. Az ábra színezése megfelel a korábbiaknak elősegítendő a tájékozódást.
+
+        Az első fontos észrevétel a szimulációs modellek újbóli megjelenése. Míg a \ref{fig:Alapstruktura} ábrán látható, hogy az allokációk szimulációs modelleket tartalmaz(hat)nak, míg a \ref{fig:ModellStruktúra} ábrán ezek nem voltak jelölve.
+        Ez a változtatás csupán az ábra átláthatósága miatt történt, ezek a modellek továbbra is be vannak ágyazva az allokációkba, csupán az egyébként is összetett ábráról lettek lehagyva a megértés megkönnyítésének érdekében.
+
         \begin{figure}[!ht]
             \centering
             \includegraphics[width=150mm, keepaspectratio]{figures/ParalelAllocationBasedFlowHU.drawio.png}
@@ -235,10 +260,12 @@ A következőkben bemutatásra kerül a kidolgozott módszertan jelenlegi állá
             \label{fig:Folyamat}
         \end{figure}
 
-        Látható, hogy az első fázis egyetlen lépést igényel csak, itt a követelmények összegyűjtése és a módszertan által megkövetelt alapstruktúra létrehozása történik a további munka előkészítéseként.
+        Visszatérve a fejlesztés menetére, látható, hogy az első fázis egyetlen lépést igényel csak. A követelmények összegyűjtése és a módszertan által megkövetelt alapstruktúra létrehozása történik meg, a további munka előkészítéseként.
         
-        A következő két fázis meglehetősen szimmetrikus, így azokat vizsgálhatjuk együtt. Először a logikai és fizikai modellek finomítása következik. Ez a két lépés haladhat párhuzamosan, mert az előző fázisokból szerzett információk alapján mindkét modell finomítása elkezdhető, de meg kell említeni, hogy a fizikai modell aktuális bővítésének befejezéséhez  szükséges a logikai modell elkészítése. Erre jó példa a \emph{Konfigurált fizikai komponensek} esetén egy mikrovezérlő memóriatartományának felosztása.
-        Ugyanakkor a redundáns alrendszerek duplikálása nem igényli a pontos logikai modellt, így azt célszerű azzal párhuzamosan végezni. A folyamatábráknál az ilyen párhuzamosság jelölés azt jelenti, hogy a feladatok végrehajtásának sorrendje nem ismert, tehát nemcsak valódi párhuzamosságot jelöl a fenti ábra, csak pontos sorrend nélkül végezhető feladatokat.
+        A következő két fázis meglehetősen szimmetrikus, így azokat vizsgálhatjuk együtt. Először a logikai és fizikai modellek finomítása következik. Ez a két lépés haladhat párhuzamosan, mert az előző fázisokból szerzett információk alapján mindkét modell finomítása elkezdhető, de meg kell említeni, hogy a fizikai modell aktuális bővítésének befejezéséhez gyakran szükséges a logikai modell elkészítése. Erre jó példa a \emph{Konfigurált fizikai komponensek} esetén egy mikrovezérlő memóriatartományának felosztása.
+        Ugyanakkor a redundáns alrendszerek duplikálása nem igényli a pontos logikai modellt, így azt célszerű azzal párhuzamosan végezni.
+        
+        A folyamatábráknál az ilyen párhuzamosság jelölés azt jelenti, hogy a feladatok végrehajtásának sorrendje nem ismert, tehát nemcsak valódi párhuzamosságot jelöl a fenti ábra, csak pontos sorrend nélkül végezhető feladatokat.
         A kidolgozott módszertanban ez a sorrend az alkalmazott tervezési irányelvektől függ. Így megengedett top-down, bottom-up és kevert módszerek alkalmazása is. Fontos megemlíteni még az autóiparban egyre inkább elterjedő platformalapú módszereket, ahol a fizikai modell megelőzi a logikait, mert annak alapja többnyire már adott a rendszer tervezése előtt, lényegi változtatás csak az utolsó, konfigurációs fázisban történik rajta.
         A fázisokra bontott, és adott lépésben megengedőbb módszertan éppen azért célravezető, mert a lehető legkevésbé köti meg a módszer alkalmazóinak kezét az alkalmazandó tervezési irány tekintetében, elősegítve a széleskörű alkalmazhatóságát.
         
@@ -249,11 +276,11 @@ A következőkben bemutatásra kerül a kidolgozott módszertan jelenlegi állá
         Ha sikeres volt a fázis végén a validáció, akkor tovább lépünk a módszertanban.
         
         Ezeknél a validációs méréseknél van lehetőség végrehajtani a \ref{sec:ModellekSzerkezete} részben említett kiértékelést a különböző implementációk között, mivel itt egyébként is futtatunk ilyen méréseket a továbblépés előtt.
-        Ezen túl meg kell említeni, hogy a módszertan alkalmazható az egyes alrendszerek kapcsán is. Az első fázis itt az adott alrendszerre vonatkozó követelmények összegyűjtése, ez után pedig a módszertan ugyan úgy ismételhető az adott komponensen belül.
+        Ezen túl meg kell említeni, hogy a módszertan alkalmazható az egyes alrendszerek kapcsán is. Az első fázis itt az adott alrendszerre vonatkozó követelmények összegyűjtése, ezután pedig a módszertan lépései ugyanúgy ismételhetők az adott komponensen belül.
 
         \subsubsection{A könyvtárak szerkezete és használata}
         Ahogy az a \ref{sec:Ujrahasznalas} részben is olvasható volt, a tervezés során gyakran felmerül az igény az egyes komponensek újrahasználására, esetleg külső beszállítótól való beszerzésére.
-        Ennek megkönnyítésének érdekében a módszertannak támogatni kell komponenskönyvtárak létrehozását és támogatását is.
+        Ennek megkönnyítésének érdekében a módszertannak támogatni kell komponenskönyvtárak létrehozását és használatát is.
         A módszertanhoz kidolgozott könyvtárstruktúra a \ref{fig:Konyvtar} ábrán látható.
         \begin{figure}[!ht]
             \centering
@@ -262,38 +289,50 @@ A következőkben bemutatásra kerül a kidolgozott módszertan jelenlegi állá
             \label{fig:Konyvtar}
         \end{figure}
 
-        A könyvtáron belül komponens típusok vannak. Ezekbe a kifelé -a paramétereiket leszámítva- azonosan megjelenő komponensek kerülnek csoportosításra, mint például szervomotorok, egyenáramú motorok, stb.
-        Egy Komponenstípuson belül definiálva van egy általános komponensinterfész, amely egy alapvető modell, amely a külvilág által látható elemeket tartalmazza a komponenstípusra vonatkozóan. Ez az alapvető fizikai és logikai modellből valamint az azokat összekötő allokációs típusból áll.
-        Az allokációhoz azért célszerű külön típust bevezetni, mert megadható benne, hogy milyen típust és milyenre képes allokálni, így csökkentve a hibalehetőségeket.
-        Ezen kívül minden konkrét komponenshez tartozik egy-egy ilyen komponens-specifikus típus is, amely \emph{specializálja} az általános verziót.
+        A könyvtáron belül komponenstípusok vannak. Ezekbe a kifelé --~a paramétereiket leszámítva~-- azonosan megjelenő komponensek kerülnek csoportosításra, mint például szervomotorok, egyenáramú motorok, stb.
+        Egy komponenstípuson belül definiálva van egy általános komponens-interfész, amely egy alapvető modell, amely a külvilág által látható elemeket tartalmazza a komponenstípusra vonatkozóan. Ez az alapvető fizikai és logikai modellből valamint az azokat összekötő allokációs típusból áll.
+        
+        Az allokációhoz azért célszerű külön típust bevezetni, mert megadható benne, hogy milyen típusú elemeket képes allokálni, így csökkentve a hibalehetőségeket.
+        
+        Ezenkívül minden konkrét komponenshez tartozik egy-egy ilyen komponens-specifikus típus is, amely \emph{specializálja} az általános verziót.
+        
         Ennek azon túl, hogy illeszkedik a kidolgozott módszertanba két előnye van.
         Először is a specializált allokációban szűkíthetjük a végekre vonatkozó típuskövetelményeket, hogy csak az összetartozóakat fogadja el a konkrét komponensmodellekből, ezzel is csökkentve a modellezési hibák előfordulását.
         Másodszor pedig, az azonos típusú komponenseknek a legtöbb esetben csak apróbb eltérések jelentkeznek a szimulációs modelljeiben, a legjellemzőbb, hogy csak paramétereikben térnek el.
-        Ha a megfelelő szimulációs modellvázak szerepelnek az általános allokációban, akkor a konkrét típusnál elég a paramétereket felülírni és az egykét kisebb módosítást redefiniálni, ha ez szükséges.
+        
+        Ha a megfelelő szimulációs modellvázak szerepelnek az általános allokációban, akkor a konkrét típusnál elég a paramétereket felülírni és azt a néhány kisebb módosítást redefiniálni, ha ez szükséges.
+        
         Ezzel csökkenthető a kódduplikáció, megkönnyítve a könyvtárak karbantartását. Ez azért is fontos, mert a \ref{sec:fmi}-ben megismert FMI szabvány által definiált csomagok, amelyeket a gyártók biztosítani szoktak a megrendelőiknek szimulációs célra szintén paraméterezhetőek, illetve relative nagy méretűek a rendszermodellekhez képest.
         Ha tehát ezekből minél kevesebbet kell a könyvtárral együtt tárolni, akkor azok mérete radikálisan csökkenthető.
 
         \subsubsection{Szimulációs modellek használata}
         Mivel a módszertan kidolgozásánál külön cél volt a szimulációs technológiák integrálása, ezért tekintsük át az ezekre vonatkozó részeket.
-        A szimulációs modellek rendszermodellen belüli reprezentációival kapcsolatos elvárások a \ref{sec:SzimIntKov} részben olvashatóak. A legfontosabb követelmény, hogy több szimulációs modellt is támogasson a módszertan egy adott komponenshez teljesül, mivel több is hozzárendelhető az allokációkhoz.
+        
+        A szimulációs modellek rendszermodellen belüli reprezentációival kapcsolatos elvárások a \ref{sec:SzimIntKov} részben olvashatóak. A legfontosabb követelmény, hogy több szimulációs modellt is támogasson a módszertan egy adott komponenshez, teljesül, mivel több is hozzárendelhető az allokációkhoz.
         Ezeknek a modelleknek a finomítása ráadásul folyamatosan történik a módszertan folyamán, a rendszerrel együtt fejlődnek és szerves részét képzik a fejlesztési folyamatnak, a tervezői döntéshozásnak.
-        Ezzel elérhető a \ref{sec:VaVmindenutt} és \ref{sec:gazdasagossag} részekben leírt minden fejlesztési fázisban jelenlévő V\&V tevékenység és gazdaságosság, mivel a módszer minél korábbi fázisban kiszűri a koncepcionális hibákat.
-        Azzal, hogy a nagyobb fázisokban hierarchikusan helyezkednek el az egyes allokációk támogatható, hogy egy magasabb szinten lévő modell hivatkozzon az általa tartalmazottakra, így a szimulációs modellekre is kiterjesztődnek a \ref{sec:Hierarhia}-ban tárgyalt hierarchikus módszerekre vonatkozó előnyök.
-        Mivel a hierarchiában minden szint több szimulációs modellt támogat, így hierarchikus szimulációs modellek használatával még egyszerűbbé válik a különböző részletességű szimulációs modellek készítése, mivel a az alkomponensek esetén elég az almodellek hivatkozásait redefiniálni.
+        
+        Ezzel elérhető a \ref{sec:VaVmindenutt} és \ref{sec:gazdasagossag} részekben leírt minden fejlesztési fázisban jelenlévő V\&V tevékenység és gazdaságosság, mivel a módszer a lehető legkorábbi fázisban kiszűri a koncepcionális vagy implementációs hibákat.
+
+        Azzal, hogy a nagyobb fázisokban hierarchikusan helyezkednek el az egyes allokációk, támogatható, hogy egy magasabb szinten lévő modell hivatkozzon az általa tartalmazottakra, így a szimulációs modellekre is kiterjesztődnek a \ref{sec:Hierarhia}-ban tárgyalt hierarchikus módszerekre vonatkozó előnyök.
+        
+        Mivel a hierarchiában minden szint több szimulációs modellt támogat, így hierarchikus szimulációs modellek használatával még egyszerűbbé válik a különböző részletességű szimulációs modellek készítése, mivel a az alkomponensek esetén elég a használt szimulációs modellek hivatkozásait redefiniálni.
 
 \section{Kvadkopter esettanulmány}
 A fent leírt módszerek tesztelése és továbbfejlesztése érdekében, szükség volt egy esettanulmányra, amelyen valós körülmények közt is ki lehet próbálni az elméleti eredményeket.
 Erre a célra egy olyan példa rendszerre van szükség, amely kellően bonyolult az előnyök kimutatására, az esetleges hiányosságok feltárására, de kezelhető méretű és lehetőleg széles körben érthető, hogy később demonstrációs eszközként szolgálhasson.
+
 Ezek alapján a követelmények alapján egy kvadkopterre esett a választás. Pontosabban egy olyan négyrotoros drónra, amelynek az esettanulmányban a feladata, hogy szeles környezetben egy előre meghatározott pozícióban lebegjen.
+
 Mivel az automatikus kódgenerálásra és a modellek konzisztenciájának ellenőrzésére még nincsenek eszközök, ezért ezeket a lépéseket manuálisan kellett elvégezni.
 A következőkben először a rendszermodell, majd a szimulációs modell kerül bemutatásra, az elkészítésük során gyűjtött tapasztalatokkal együtt.
 
     \subsection{A rendszermodell}
     A rendszermodell esetében csak a főbb tervezési szempontok és a felépítés kerül bemutatásra, mert a dolgozat lényegének megértésében a konkrét forráskód elemzése nem segíti az olvasót. Ehelyett a struktúra bemutatása és a módszertan szempontjából lényeges részletek kiemelésére helyezem inkább a hangsúlyt ebben a részben.
-    A modellezett kvadkopter fizikailag igen egyszerű felépítést követ. Egy GPS és egy IMU modul segítségével mézi a pozícióját és az orientációját. A példa egyszerűsége miatt ezek ideális szenzorként lettek modellezve.
     
+    A modellezett kvadkopter fizikailag igen egyszerű felépítést követ. Egy GPS és egy IMU modul segítségével méri a pozícióját és az orientációját. A példa egyszerűsége miatt ezek ideális szenzorként lettek modellezve.
     A módszertanban leírtak szerint ezt a modellt egy újabb iterációban lehetne tovább finomítani, de jelenleg tökéletesen megfelelő ez az absztrakció.
-    A szenzorok adatait egy mikrokontroller olvassa ki, amely futtatja a szabályozó algoritmusokat, majd az azok eredményeképpen adódó motorvezérlő jeleket továbbküldi a négy motornak.
+    
+    A szenzorok adatait egy mikrokontroller olvassa, amely futtatja a szabályozó algoritmusokat, majd az azok eredményeképpen adódó motorvezérlő jeleket továbbküldi a négy motornak.
     
     A tervezés folyamán a motorokat kész komponensnek tekintettem amelyek a hozzájuk tartozó vezérlővel és rotorral egybeépítve készen kaphatóak. Ezek az egységek ipari drónok esetében valóban így kaphatóak katalógus szerint és saját adatlappal rendelkeznek, mert ezek a komponensek együtt határozzák meg a meghajtás különböző karakterisztikáit.
     Ezt azért fontos kiemelni, mert ez egy remek lehetőség kipróbálni a módszertanban javasolt könyvtárak használatát, illetve később a szimulációs modellben az FMU-k bemutatására is remek lehetőséget nyújt.
@@ -301,12 +340,15 @@ A következőkben először a rendszermodell, majd a szimulációs modell kerül
     A logikai modellben a szenzorok adatainak begyűjtése, a szabályozóalgoritmus és az az alapján történő beavatkozás jelenik meg magas szinten.
     
     Utóbbi kettő azért érdekes, mert így a magasszintű modellben nem köteleződtünk el egy konkrét implementáció mellett, mivel számos megvalósítás lehetséges egy forgószárnyas drón megvalósítására. Ennek az előnye többek között, hogy a pozíciótartásért felelős szabályozó csak az összesített tolóerőt és a különböző forgástengelyek mentén jelentkező elmozdulást állítja így ez gyakorlatilag teljesen független a rotorok számától és elhelyezkedésétől.
-    Ez persze azt jelenti, hogy a szabályozó kimenetét nem lehet azonnal a motoroknak küldeni, hanem előbb elő kell állítani belőlük a pontos beavatkozószervek utasításait. Ezzel a megoldással a szabályozónk újrahasználható elemmé vált, amelyet csak paraméterezni kell egy új hasonló rendszer esetében, ami egy valós projektnél előnyös gyakorlatnak számítana.
+    Ez persze azt jelenti, hogy a szabályozó kimenetét nem lehet azonnal a motoroknak küldeni, hanem előbb elő kell állítani belőlük a konkrét beavatkozószervek utasításait.
     
-    Ez alapján a beavatkozó blokk a későbbiekben tovább lett finomítva, hogy az általános parancsok alapján meghatározza az egyes motorok tolóerejét az adott konfigurációhoz. 
-    Ezzel együtt finomításra került a két adatgyűjtési feladat a konkrét mérésre és annak a szenzorból való kiolvasására és megtalálására.
+    Ezzel a megoldással a szabályozónk újrahasználható elemmé vált, amelyet csak paraméterezni kell egy új hasonló rendszer esetében, ami egy valós projektnél előnyös gyakorlatnak számítana.
+    
+    Ezek alapján a beavatkozó blokk a későbbiekben tovább lett finomítva, hogy az általános parancsok alapján meghatározza az egyes motorok tolóerejét az adott konfigurációhoz. 
+    Ezzel együtt finomításra került a két adatgyűjtési feladat a konkrét mérésre, valamint annak a szenzorból való kiolvasására és feldolgozására.
     
     Ennél a két esetnél jól megfigyelhető hogy a logikai és fizikai elemek átlapolódnak. Az adatgyűjtés két fizikai elemet is érintett, a beavatkozás pedig ötöt is, a transzformáció és a négy motor vezérlése által.
+    
     Ezek az átlapolódások jól láthatóak voltak a magasszintű allokációk elkészítésénél, a következő fázisban a felhasználásikkal egyszerűen, egy lépésben elvégezhető volt a modellek finomítása az iteratív próbálkozás elkerülésével.
 
 
@@ -316,23 +358,78 @@ A következőkben először a rendszermodell, majd a szimulációs modell kerül
     Ez alapján készült el később a Modelica modell is az eszköz beépített blokk-könyvtárával, amellyel grafikusan is megadhatóak a nyelv elemei.
     
     Mivel a dolgozatban egyaránt foglalkoztam az FMU-kkal kompatibilis és a megkötések nélküli szimulációs modellekkel, ezért mindkét módszerrel készült egy-egy szimulációs modell.
+    A megértést megkönnyítendő, a két modellben a különböző blokkokat eltérő színnel és betűjellel jelöltem az alábbiak szerint:
+
+    \begin{description}
+        \item[Mikrokontroller] C(ontroller) narancssárga színnel
+        \item[Motor] M(otor) világoszöld színnel
+        \item[Váz] F(rame) világoskék színnel
+        \item[Szenzorok] S(ensors) lila színnel
+    \end{description}
+
+    A szerkesztő által használt jelölések a kapcsolatokhoz:
+
+    \begin{description}
+        \item[Számadatok] Kék vonalak és háromszög alakú csatlakozók, valós számok átadására.
+        \item[Mechanika] Szürke vonalak és szögletes csatlakozók, az erők és forgatónyomatékok mindkét irányban terjednek rajtuk.
+    \end{description}
 
         \subsubsection{Megkötések nélküli verzió}
         Ezt a modellt egyszerűen lehetett származtatni a rendszermodellből. Mivel a Modelica is lehetővé teszi a hierarchikus tervezést, ezért ezt a módszert alkalmaztam az átláthatóság érdekében.
         A hierarchia tetején a fizikai komponensek helyezkednek el, ezek belsejében vannak a logikai komponensek, amelyek a belső működést definiálják, illetve az adott alkatrész fizikai modellje is.
         Ezzel egy könnyen követhető modellstruktúrát kaptam, amely könnyen áttekinthető. A rendszernek ez a virtuális reprezentációja szerkezetileg alapvetően megegyezik a valóssal.
-        
         Ez megfelel annak az elképzelésnek, hogy a szimulációs modell egy virtuális mása a valódi rendszernek.
 
+        A modell a fentiekben leírt jelöléseknek megfelelően a \ref{fig:stdSzim} ábrán látható.
+        Jól megfigyelhető, hogy a motorok, szenzorok és a drón váza mechanikai kapcsolatban állnak egymással.
+        Ugyanakkor a mikrokontroller a szenzorokkal és a motorokkal számadatokkal kommunikál.
+        Természetesen a valóságban a mikrokontroller is a géphez lenne rögzítve, de ebben az egyszerűsített modellben a tömegét elhanyagoltam, az ábra áttekinthetősége érdekében.
+
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[width=100mm, keepaspectratio]{figures/stdSzim.png}
+            \caption{A megkötések nélkül elkészített szimulációs modell.} 
+            \label{fig:stdSzim}
+        \end{figure}
+
         \subsubsection{FMI kompatibilis verzió}
-        Ennek a modellnek a különlegessége, hogy míg az előzőben használható volt olyan kapcsolat, amely azt írta le, hogy a motorok fizikai kapcsolatban állnak a drón vázával, ezen a kapcsolaton átadásra kerültek a különböző erők és forgatónyomatékok, addig ebben a verzióban a komponensek határán csak logikai értékek valamint egész és racionális számok léphettek át.
-        Ez persze feloldható volt a \ref{sec:fmiKompat} részben leírt módszerrel, azonban ennek következtében a motorok és a váz között nem egy mechanikai kapcsolat volt, amin a megfelelő értékek minkét irányba terjedhettek, hanem az adott motor keltette tolóerő és forgatónyomaték, amely a váz modelljén belül került átalakításra fizikai értékké. Ennek következtében azt, hogy minden motor mozgása kihat a teljes rendszerre, csak úgy volt modellezhető, hogy a mozgásmodell teljesen a vázban került megvalósításra.
+        Ennek a modellnek a különlegessége, hogy míg az előzőben használható volt olyan kapcsolat, amely azt írta le, hogy a motorok fizikai kapcsolatban állnak a drón vázával, addig ebben a verzióban a komponensek határán csak logikai értékek valamint egész és racionális számok léphettek át.
+        Ez persze feloldható volt a \ref{sec:fmiKompat} részben leírt módszerrel, azonban ennek következtében a motorok és a váz között nem egy mechanikai kapcsolat volt, amin a megfelelő értékek minkét irányba terjedhettek, hanem az adott motor keltette tolóerő és forgatónyomaték, amely a váz modelljén belül került átalakításra fizikai értékké. Ennek következtében az, hogy minden motor mozgása kihat a teljes rendszerre, csak úgy volt modellezhető, hogy a mozgásmodell teljesen a vázban került megvalósításra.
 
-        Ennek kellemetlen következménye, hogy a motorok tömegét modellező blokkokat a vázban kellett elhelyezni, pedig ez egy külön alkatrész ami le is cserélhető egy másikra. Persze megoldható, hogy paraméterként adhassuk meg és az SSP (Lásd: \ref{sec:ssp} rész) szabvánnyal elméletben megoldható, hogy egy adott katalógusból választott motortípus kiválasztásával az egész modell átparaméterezhető legyen, de ez olyan komplex probléma ami nehezen automatizálható, sok hibalehetőséget tartalmaz és nem is túl újrahasználható.
+        Ennek kellemetlen következménye, hogy a motorok tömegét modellező blokkokat a vázban kellett elhelyezni, pedig ez egy külön alkatrész ami le is cserélhető egy másikra.
+        Persze megoldható, hogy paraméterként adhassuk meg és az SSP (Lásd: \ref{sec:ssp} rész) szabvánnyal elméletben megoldható, hogy egy adott katalógusból választott motortípus kiválasztásával az egész modell átparaméterezhető legyen, de ez olyan komplex probléma ami nehezen automatizálható, sok hibalehetőséget tartalmaz és nehezen újrahasználható illetve karbantartható modellekhez vezet.
 
-        Az, hogy egy komponens modellje részben egy másikba kerül áthelyezésre, és nem a valós kapcsolatokat pátjuk, hanem számértékek terjedését, nagyban megnehezíti annak áttekintését és felhasználását, de cserében megoldható a modellek átadása anélkül, hogy a gyártó felfedné az implementációját.
+        Az, hogy egy komponens modellje részben egy másikba kerül áthelyezésre, és nem a valós kapcsolatokat látjuk, hanem számértékek terjedését, nagyban megnehezíti annak áttekintését és felhasználását, de cserébe megoldható a modellek átadása anélkül, hogy a gyártó felfedné az implementáció részleteit, ami több ipari résztvevő között gyakran megjelenő igény a közös munka során.
         Mindemellett amíg a szabványt nem bővítik a szükséges akauzális kapcsolatok leírásához szükséges megoldásokkal, addig ez a technika csak nagyon indokolt esetben javasolt.
+
+        Az FMI kompatibilis modell a fentiekben leírt jelöléseknek megfelelően a \ref{fig:fmiSzim} ábrán látható.
+        Megfigyelhető, hogy az előző modellhez képest itt kizárólag számadatok formájában áramlik adat a komponensek között.
+        A szenzorok esetében a mérést végző blokkok a vázba kerültek és a \emph{Sensors} blokk csak a szenzorra jellemző zajt és egyéb paramétereket modellezi.
+        A \emph{Motor} blokkok pedig kizárólag az általuk létrehozott mechanikai hatások mértékét továbbítja a váznak amely a teljes dinamikai modellt implementálja, beleértve a határain kívül eső blokkok szerepét is.
+
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[width=100mm, keepaspectratio]{figures/fmiSzim.png}
+            \caption{Az FMI szabvány megkötései szerint elkészített szimulációs modell.} 
+            \label{fig:fmiSzim}
+        \end{figure}
 
         \subsubsection{Szimulációs eredmények}
         A szimulációkat futtatva a rendszer mindkét modell esetében felemelkedett, megközelítette az előre kijelölt pozíciót és azt a széllökések mellett is tartotta elfogadható mértékű kitérések mellett.
-        Ez alapján a tervezési folyamat és az esettanulmány is sikeresnek tekinthető.
+        
+        A szimulációs eredményeket szemléltető animációról készült képek a \ref{fig:SimRes} ábrán láthatóak.
+        Az ábrán a fekete elemek a referencia koordináta-rendszert, a kékek magát a kvadkoptert, míg a zöldek az erőket és forgatónyomatékokat szemléltetik.
+        A szélső, motorokat jelképező gömbökre hatóerők és forgatónyomatékok a motorok által keltettek, amelyekkel beavatkozunk a rendszerbe. Az origóból induló lefelé mutató erő a gravitációt reprezentálja.
+        A kvadkopter testén ható erő és forgatónyomaték, amely az ábrán látható módon a többi nyíltól függetlenül mozog, a rendszerre ható szélzavarást reprezentálja.
+
+        A szimuláció paraméterei úgy lettek meghatározva, hogy a rendszer az origóból felszállva az $y$ tengelyt jelképező nyíl hegyénél lebegjen.
+        
+        Az ábrán látható, hogy a rendszer a szimuláció második felében -öt másodperc után- már elérte a kitűzött célt, a továbbiakban ezt próbálja tartani a szélzavarás ellenére, ez okozza a harmadik és negyedik képen látható kitéréseket.
+        Ezeknek az eredményeknek az alapján, a tervezési folyamat és az esettanulmány is sikeresnek tekinthető.
+
+        \begin{figure}[!ht]
+            \centering
+            \includegraphics[width=150mm, keepaspectratio]{figures/SimRes.png}
+            \caption{A szimulációk eredménye pillanatképeken.}
+            \label{fig:SimRes}
+        \end{figure}
